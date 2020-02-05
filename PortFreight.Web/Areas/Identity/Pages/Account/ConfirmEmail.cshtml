@@ -1,0 +1,12 @@
+@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "You have successfully verified your account";
+}
+
+<div id="main" class="govuk-main-wrapper" tabindex="-1">
+    <h1 class="govuk-heading-l">@ViewData["Title"]</h1>
+    <div class="govuk-body-l">
+    <a class="govuk-link" asp-page="Login">Sign in to complete your profile</a>
+    </div>
+</div>

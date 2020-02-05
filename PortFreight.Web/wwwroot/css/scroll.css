@@ -1,0 +1,52 @@
+﻿.outerDIV {
+    padding-left: 1em;
+    padding-right: 1em;
+    margin-right: -1.1em;
+}
+
+.innerDIV {
+    overflow: auto;
+    padding-right: 1.1em;
+    margin-right: -1.1em;
+}
+
+table.scroll {
+    border: 2px solid black;
+}
+
+    table.scroll tbody, table.scroll thead {
+        display: block;
+    }
+
+    table.scroll tbody {
+        height: auto;
+        max-height: 200px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+tbody {
+    border-top: 2px solid black;
+}
+
+    tbody td, thead th {
+        text-align: left;
+    }
+
+        tbody td:last-child, thead th:last-child {
+            border-right: none;
+        }
+
+.col1 {
+    width: 510px;
+    min-width: 250px;
+}
+
+.col2 {
+    color: #005ea5;
+    float: right;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bolder;
+    margin-right: .5em;
+}

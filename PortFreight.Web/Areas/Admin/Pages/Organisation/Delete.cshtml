@@ -1,0 +1,38 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.OrgList.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<a class="govuk-back-link" asp-page="./Index">Back</a>
+
+<div class="govuk-main-wrapper">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-m">Are you sure you want to delete this?</h1>
+            <dl class="govuk-summary-list ">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        @Html.DisplayNameFor(model => model.Organisation.OrgId)
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Html.DisplayFor(model => model.Organisation.OrgId)
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        @Html.DisplayNameFor(model => model.Organisation.OrgName)
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Html.DisplayFor(model => model.Organisation.OrgName)
+                    </dd>
+                </div>
+            </dl>
+            <form method="post">
+                <input type="hidden" asp-for="Organisation.OrgId" />
+                <input type="submit" value="Delete" class="govuk-button" />
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+﻿@page
+@model PortFreight.Web.Pages.Msd1.SuccessModel
+@{
+    ViewData["Title"] = "Success";
+}
+
+<div class="govuk-width-container">
+    <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main" role="main" tabindex="-1">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <form method="post">
+                    <div class="govuk-panel govuk-panel--confirmation">
+                        <h1 class="govuk-panel__title">
+                            Submission complete
+                        </h1>
+                        <div class="govuk-panel__body">
+                            Your reference
+                            <br><strong>@(Model.MSD1.RecordRef ?? Model.MSD1.Msd1Id)</strong>
+                        </div>
+                    </div>
+
+                    <p class="govuk-body">
+                        Thank you for submitting this return.
+                    </p>
+                    <div class="govuk-form-group">
+                        <h2 class="govuk-heading-s">
+                            See how we use this data on
+                            <a target="_blank" href="https://www.gov.uk/government/collections/maritime-and-shipping-statistics">
+                               the port freight statistics webpage. <span class="govuk-visually-hidden">link opens in a new window</span>
+                            </a>
+                        </h2>
+                    </div>
+
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-one-half">
+                            <a class="govuk-link" asp-page="/Msd1/Index" class="govuk-button">
+                                Create new return
+                            </a>
+                        </div>
+                        <div class="govuk-grid-column-one-half">
+                            <button type="submit" asp-page-handler="VoyageDetails" class="govuk-button">New return, same vessel</button>
+                        </div>
+                    </div>
+                    <div class="govuk-form-group">
+                        <h2 class="govuk-heading-s">
+                            <a class="govuk-link" asp-page="/Dashboard">Return to dashboard</a>
+                        </h2>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>

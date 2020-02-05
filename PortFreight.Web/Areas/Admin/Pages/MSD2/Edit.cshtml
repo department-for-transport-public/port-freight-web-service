@@ -1,0 +1,102 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.MSD2.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="govuk-body">
+    <div class="govuk-back-link">
+        <a class="govuk-link" asp-page="./Index">Back</a>
+    </div>
+    <div class="govuk-main-wrapper">
+        <h1 class="govuk-heading-l">Edit</h1>
+        <h2 class="govuk-heading-m">Msd2</h2>
+        <hr />
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <form method="post">             
+            <div class="govuk-form-group">
+                <span class="govuk-error-message">@Html.ValidationMessage("CustomError")</span>
+                </div>
+                    <div asp-validation-summary="ModelOnly" class="govuk-error-message"></div>
+                 
+                 <div class="govuk-form-group">
+                        <label asp-for="Id" class="govuk-label"></label>
+                        <input asp-for="Id" class="govuk-input" value="@Model.msd2.Id" readonly />
+                        <span asp-validation-for="Id" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="SenderId" class="govuk-label"></label>
+                        <input asp-for="SenderId" class="govuk-input" value="@Model.msd2.SenderId" readonly />
+                        <span asp-validation-for="SenderId" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="ReportingPort" class="govuk-label"></label>
+                         <span asp-validation-for="ReportingPort" class="govuk-error-message"></span>
+                        <input asp-for="ReportingPort" class="govuk-input" value="@Model.msd2.ReportingPort"/>
+                        
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="Year" class="govuk-label"></label>
+                        <input asp-for="Year" class="govuk-input" value="@Model.msd2.Year" />
+                        <span asp-validation-for="Year" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="Quarter" class="govuk-label"></label>
+                        <input asp-for="Quarter" class="govuk-input" value="@Model.msd2.Quarter" />
+                        <span asp-validation-for="Quarter" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="GrossWeightInward" class="govuk-label"></label>
+                        <span asp-validation-for="GrossWeightInward" class="govuk-error-message"></span>
+                        <input asp-for="GrossWeightInward" class="govuk-input" value="@Model.msd2.GrossWeightInward" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="TotalUnitsInward" class="govuk-label"></label>
+                        <input asp-for="TotalUnitsInward" class="govuk-input" value="@Model.msd2.TotalUnitsInward" />
+                        <span asp-validation-for="TotalUnitsInward" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="PassengerVehiclesInward" class="govuk-label"></label>
+                        <input asp-for="PassengerVehiclesInward" class="govuk-input" value="@Model.msd2.PassengerVehiclesInward" />
+                        <span asp-validation-for="PassengerVehiclesInward" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="GrossWeightOutward" class="govuk-label"></label>
+                        <span asp-validation-for="GrossWeightOutward" class="govuk-error-message"></span>
+                        <input asp-for="GrossWeightOutward" class="govuk-input" value="@Model.msd2.GrossWeightOutward" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="TotalUnitsOutward" class="govuk-label"></label>
+                        <input asp-for="TotalUnitsOutward" class="govuk-input" value="@Model.msd2.TotalUnitsOutward" />
+                        <span asp-validation-for="TotalUnitsOutward" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="PassengerVehiclesOutward" class="govuk-label"></label>
+                        <input asp-for="PassengerVehiclesOutward" class="govuk-input" value="@Model.msd2.PassengerVehiclesOutward"/>
+                        <span asp-validation-for="PassengerVehiclesOutward" class="govuk-error-message"></span>
+                    </div>
+                    <input type="hidden" asp-for="CreatedDate" class="govuk-input" value="@Model.msd2.CreatedDate" />
+                    
+                    @if(@Model.showCheckbox){
+                    <div class="govuk-checkboxes__item">
+                        <input asp-for="CorrectWeight" class="govuk-checkboxes__input" id="correctweight" name="correctweight" type="checkbox"/>
+                        <label asp-for="CorrectWeight" class="govuk-label govuk-checkboxes__label" for="correctweight">
+                        I confirm the weight values are correct
+                        </label>
+                    </div>
+                    <br>
+                    }
+                    <div class="govuk-form-group">
+                        <input type="submit" value="Save" class="govuk-button" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }

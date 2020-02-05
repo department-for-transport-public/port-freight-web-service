@@ -1,0 +1,52 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.MSD3.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="govuk-body">
+    <div class="govuk-back-link">
+        <a class="govuk-link" asp-page="./Index">Back</a>
+    </div>
+    <div class="govuk-main-wrapper">
+<h1 class="govuk-heading-l">Create</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="govuk-error-message"></div>
+            <div class="govuk-form-group">
+                <label asp-for="Msd3.SenderId" class="govuk-label"></label>
+                <span asp-validation-for="Msd3.SenderId" class="govuk-error-message"></span>
+                <input asp-for="Msd3.SenderId" class="govuk-input" />
+            </div>
+            <div class="govuk-form-group">
+                <label asp-for="Msd3.ReportingPort" class="govuk-label"></label>
+                <span asp-validation-for="Msd3.ReportingPort" class="govuk-error-message"></span>
+                <input asp-for="Msd3.ReportingPort" class="govuk-input" />
+            </div>
+            <div class="govuk-form-group">
+                <label asp-for="Msd3.Year" class="govuk-label"></label>
+                <span asp-validation-for="Msd3.Year" class="govuk-error-message"></span>
+                <input asp-for="Msd3.Year" class="govuk-input" />
+            </div>
+            <div class="govuk-form-group">
+                <label asp-for="Msd3.Quarter" class="govuk-label"></label>
+                <span asp-validation-for="Msd3.Quarter" class="govuk-error-message"></span>
+                <input asp-for="Msd3.Quarter" class="govuk-input" />
+            </div>
+            
+            <div class="govuk-form-group">
+                <input type="submit" value="Create" class="govuk-button" />
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</main>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

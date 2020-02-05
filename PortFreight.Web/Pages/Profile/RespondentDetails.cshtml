@@ -1,0 +1,85 @@
+﻿@page
+@model PortFreight.Web.Pages.Profile.RespondentDetailsModel
+@{
+    ViewData["Title"] = "Respondent details";
+}
+<a class="govuk-link" asp-page="/Dashboard">Back</a>
+<div id="main" class="govuk-main-wrapper" tabindex="-1">
+    @await Html.PartialAsync("_ErrorSummary")
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+            <ul class="tab__nav">
+                <li>
+                    <a href="ContactDetails" class="govuk-link" data-target="ContactDetails">
+                        Contact details
+                    </a>
+                </li>
+                <li>
+                    <a href="RespondentDetails" class="active govuk-link" data-target="RespondentDetails">
+                        Respondent details
+                    </a>
+                </li>
+                <li>
+                    <a href="PortDetails" class="govuk-link" data-target="RespondentDetails">
+                        Port details
+                    </a>
+                </li>
+                <li>
+                    <a href="/Identity/Account/Manage/ChangePassword" class="govuk-link" data-target="ChangePassword">
+                        Change password
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body" role="status">
+                <span class="alert-success">@Model.SuccessMessage </span>
+            </p>
+            <div class="govuk-form-group">
+                <h1 class="govuk-heading-l">@ViewData["Title"]</h1>
+            </div>
+            <form id="frmReturn" method="post">
+                @Html.HiddenFor(m => m.SenderType.SenderId)
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                            Type of respondent
+                        </legend>
+                        <span id="waste-hint" class="govuk-hint">
+                            Select all that apply
+                        </span>
+                        <div>
+                            <input class="govuk-input" hidden asp-for="SenderType" />
+                            <span class="govuk-error-message" asp-validation-for=SenderType></span>
+                        </div>
+                        <div class="govuk-checkboxes">
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="SenderType_IsAgent" asp-for="SenderType.IsAgent" />
+                                @Html.LabelFor(m => m.SenderType.IsAgent, new { @class = "govuk-label govuk-checkboxes__label" })
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" asp-for="SenderType.IsLine" />
+                                @Html.LabelFor(m => m.SenderType.IsLine, new { @class = "govuk-label govuk-checkboxes__label" })
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" asp-for="SenderType.IsPort" OnClick="return AssociatedPorts()" />
+                                @Html.LabelFor(m => m.SenderType.IsPort, new { @class = "govuk-label govuk-checkboxes__label" })
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+             
+                <div class="govuk-form-group">
+                    <button type="submit" asp-page-handler="Submit" class="govuk-button">
+                        Save
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+@section Stylesheets {
+}
+@section Scripts {
+}

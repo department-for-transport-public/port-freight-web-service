@@ -1,0 +1,65 @@
+﻿@page
+@model PortFreight.Web.Pages.Msd1.VesselDetailsModel
+@{
+    ViewData["Title"] = "Vessel details"; 
+}
+
+<main id="main" tabindex="-1">
+@{
+    if (Model.FromSummary)
+    {
+        <a class="govuk-link" asp-page="SubmitReturn" asp-route-FromSummary="true" asp-route-IsEdited="true">Back</a>
+    }
+    else
+    {
+        <a class="govuk-link" asp-page="CompanyDetails">Back</a>
+    }
+}
+<div class="govuk-main-wrapper">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <span class="govuk-caption-l">Step 2 of 5</span>
+            <h1 class="govuk-heading-l">@ViewData["Title"]</h1>
+            <form method="post">
+                <label class="govuk-label" asp-for="Vessel" for="_txtImo">
+                    IMO/LRN or vessel name
+                </label>
+                <div class="@(Model.ModelState.IsValid ? "govuk-form-group" : "govuk-form-group govuk-form-group--error")">
+                    <span asp-validation-for="@Model.Vessel" class="govuk-error-message"></span>
+                    <span class="govuk-error-message">
+                        @Html.ValidationMessage("CustomError")
+                    </span>
+                    <div id="Input_Vessel-container"> </div>
+                </div>
+                <div class="govuk-grid-row">
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary">
+                        <span class="govuk-details__summary-text">
+                            Cannot find the vessel?
+                        </span>
+                    </summary>
+                    <div class="govuk-details__text">
+                        If you cannot find the vessel, or if its details are incorrect, contact <a class="govuk-link" href="mailto:maritimestats.help@dft.gov.uk">maritimestats.help@dft.gov.uk</a> or call 020 7944 4441.
+                    </div>
+                </details>
+                <div class="govuk-form-group">
+                    <button type="submit" class="govuk-button">
+                        Continue
+                    </button>
+                </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</main>
+@section Stylesheets {
+    <link href="~/css/accessible-autocomplete.min.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/js/msd1/VesselDetails.js"></script>
+    <script src="~/js/accessible-autocomplete.js"></script>
+    <script>
+            var vessels = @Html.Raw(Json.Serialize(Model.Vessels))
+    </script>
+}

@@ -1,0 +1,275 @@
+﻿@page
+
+@model FindSubmissionModel
+@{
+}
+<main id="main" tabindex="-1">
+    <div class="govuk-body">
+        <div class="govuk-back-link">
+            <a class="govuk-link" asp-page="/Index">Back</a>
+        </div>
+        <div class="govuk-main-wrapper">
+            <h1 class="govuk-heading-l">Find a MSD1 return</h1>
+            <form method="post">
+                <h2 class="govuk-heading-m">Enter a search criteria</h2>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-one-third">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label">Sender ID</label>
+                            <input asp-for="Input.SenderId" class="govuk-input" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label">Senders Record Ref</label>
+                            <input asp-for="Input.RecordRef" class="govuk-input" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label">Our Ref</label>
+                            <input asp-for="Input.SubmissionRef" class="govuk-input" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label">Agent</label>
+                            <input asp-for="Input.Agent" class="govuk-input" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label">Line</label>
+                            <input asp-for="Input.Line" class="govuk-input" />
+                        </div>
+                    </div>
+                    <div class="govuk-grid-column-one-third">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label">Reporting Port</label>
+                            <input asp-for="Input.ReportingPort" class="govuk-input" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label">Port of load/unload</label>
+                            <input asp-for="Input.Port" class="govuk-input" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label">Statistical Port</label>
+                            <input asp-for="Input.StatisticalPort" class="govuk-input" id="Input_StatisticalPort" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label">Ship Name</label>
+                            <input asp-for="Input.ShipName" class="govuk-input" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label">IMO</label>
+                            <input type="number" asp-for="Input.IMO" class="govuk-input" />
+                        </div>
+                    </div>
+                    <div class="govuk-grid-column-one-third">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label">Cargo type</label>
+                            <select asp-for="Input.SelectedCargoType" class="govuk-select" asp-items="@Model.Input.CargoType">
+                                <option value="">Please Select</option>
+                            </select>
+                        </div>
+
+                        <div class="govuk-form-group">
+                            <label class="govuk-label">Year</label>
+                            <input type="number" asp-for="Input.Year" class="govuk-input" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label">Quarter</label>
+                            <input type="number" asp-for="Input.Quarter" class="govuk-input" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label">Date Entered</label>
+                            <input type="date" asp-for="Input.DateEntered" class="govuk-input" pattern="\d{1,2}/\d{1,2}/\d{4}" placeholder="dd/mm/yyyy" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label">Source</label>
+                            <select asp-for="Input.Source" class="govuk-select" id="_ddlSource">
+                                <option value="" selected="selected">Please Select</option>
+                                <option value="1">WEB</option>
+                                <option value="2">ASCII</option>
+                                <option value="3">GESMES</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        <button type="submit" onclick="window.location='#search_results'" class="govuk-button" asp-page-handler="Search">
+                            Search
+                        </button>
+                    </div>
+                    <div class="govuk-grid-column-one-third">
+                        <a class="clear-button" onclick="clearbutton()"> Clear</a>
+                    </div>
+                </div>
+            </form> 
+           
+                <div id="search_results">
+                    <h2 class="alert-success">@Model.SuccessMessage</h2>
+                    <div class="govuk-form-group">
+                        <span class="govuk-error-message">@Html.ValidationMessage("CustomError")</span>
+                    </div>
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-full">
+                            <div class="govuk-form-group">
+                                @if (Model.Msd1SearchResultList.Count > 0)
+                                {                                 
+                                    <hr />
+                                    <div class="govuk-grid-row">
+                                        <div class="govuk-grid-column-one-thirds">
+                                            <span class="govuk-details__text"> <b>Search Results: @Model.Msd1SearchResultList.Count</b> </span>
+                                            @{
+                                                var searchInputs = new Dictionary<string, string>
+                                                                        {
+                                                                            {"Agent", @Model.Input.Agent},
+                                                                            {"DateEntered", @Model.Input.DateEntered},
+                                                                            {"IMO", @Model.Input.IMO},
+                                                                            {"Line", @Model.Input.Line},
+                                                                            {"Port", @Model.Input.Port},
+                                                                            {"Quarter", @Model.Input.Quarter},
+                                                                            {"RecordRef", @Model.Input.RecordRef},
+                                                                            {"ReportingPort", @Model.Input.ReportingPort},
+                                                                            {"Source", @Model.Input.Source},
+                                                                            {"SenderId", @Model.Input.SenderId},
+                                                                            {"ShipName", @Model.Input.ShipName},
+                                                                            {"SelectedCargoType", @Model.Input.SelectedCargoType},
+                                                                            {"StatisticalPort", @Model.Input.StatisticalPort},
+                                                                            {"SubmissionRef", @Model.Input.SubmissionRef},
+                                                                            {"Year", @Model.Input.Year}
+                                                                        };
+                                            }
+                                            <a  style="float:right; margin-right:1em" class="govuk-link" asp-all-route-data="searchInputs" asp-page-handler="Export">
+                                                Export to CSV
+                                            </a>
+                                        </div>
+                                    </div>
+                                     
+                                    <div id="table-wrapper">
+                                        <div id="table-scroll">
+                                            <table class="govuk-table scroll" id="SubmissionSummaryTable">
+                                                <thead class="govuk-table__head">
+                                                    <tr class="govuk-table__row">
+                                                        <th aria-sort="none" class="govuk-table__header">
+                                                            <button type="button" data-index="0">Sender ID</button>
+                                                        </th>
+                                                        <th aria-sort="none" class="govuk-table__header">
+                                                            <button type="button" data-index="1">Reporting port</button>
+                                                        </th>
+                                                        <th aria-sort="none" class="govuk-table__header">
+                                                            <button type="button" data-index="2">IMO</button>
+                                                        </th>
+                                                        <th aria-sort="none" class="govuk-table__header">
+                                                            <button type="button" data-index="3">Ship name</button>
+                                                        </th>
+                                                        <th aria-sort="none" class="govuk-table__header">
+                                                            <button type="button" data-index="4">Ship type</button>
+                                                        </th>
+                                                        <th aria-sort="none" class="govuk-table__header">
+                                                            <button type="button" data-index="5">Year</button>
+                                                        </th>
+                                                        <th aria-sort="none" class="govuk-table__header">
+                                                            <button type="button" data-index="6">Quarter</button>
+                                                        </th>
+                                                        <th aria-sort="none" class="govuk-table__header">
+                                                            <button type="button" data-index="7">Direction</button>
+                                                        </th>
+                                                        <th aria-sort="none" class="govuk-table__header">
+                                                            <button type="button" data-index="8">Load/Unload port</button>
+                                                        </th>
+                                                        <th aria-sort="none" class="govuk-table__header">
+                                                            <button type="button" data-index="9">Agent</button>
+                                                        </th>
+                                                        <th aria-sort="none" class="govuk-table__header">
+                                                            <button type="button" data-index="10">Line</button>
+                                                        </th>
+                                                        <th aria-sort="none" class="govuk-table__header">
+                                                            <button type="button" data-index="11">Our Ref</button>
+                                                        </th>
+                                                        <th aria-sort="ascending" class="govuk-table__header">
+                                                            <button type="button" data-index="12">Senders Ref</button>
+                                                        </th>
+                                                        <th aria-sort="ascending" class="govuk-table__header">
+                                                            <button type="button" data-index="13">Date entered</button>
+                                                        </th>
+                                                        <th aria-sort="none" class="govuk-table__header">
+                                                            <button type="button" data-index="14">Last updated by</button>
+                                                        </th>
+                                                          <th aria-sort="none" class="govuk-table__header">
+                                                            <button type="button" data-index="15">Last updated date</button>
+                                                        </th>
+                                                        <th class="govuk-table__header">Cargo summary</th>
+                                                        <th class="govuk-table__header">Edit submission</th>
+                                                        <th class="govuk-table__header">Delete</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="govuk-table__body">
+                                                    @foreach (var msd1 in @Model.Msd1SearchResultList)
+                                                    {
+                                                        <tr class="govuk-table__row">
+                                                            <td class="govuk-table__cell">@msd1.SenderId</td>
+                                                            <td class="govuk-table__cell">@msd1.ReportingPort</td>
+                                                            <td class="govuk-table__cell">@msd1.IMO</td>
+                                                            <td class="govuk-table__cell">@msd1.ShipName</td>
+                                                            <td class="govuk-table__cell">@msd1.ShipType</td>
+                                                            <td class="govuk-table__cell">@Html.Raw(msd1.Year)</td>
+                                                            <td class="govuk-table__cell">@msd1.Quarter</td>
+                                                            <td class="govuk-table__cell">@(msd1.Direction)</td>
+                                                            <td class="govuk-table__cell">@msd1.LoadUnloadPort</td>
+                                                            <td class="govuk-table__cell">@msd1.Agent</td>
+                                                            <td class="govuk-table__cell">@msd1.Line</td>
+                                                            <td class="govuk-table__cell">@msd1.OurRef</td>
+                                                            <td class="govuk-table__cell">@msd1.SendersRecordRef</td>
+                                                            <td class="govuk-table__cell">  
+                                                                    <div class="govuk-visually-hidden-focusable">
+                                                                         @msd1.CreatedDate.ToString("yyyyMMdd")
+                                                                    </div>
+                                                                @msd1.CreatedDate.ToString("dd/MM/yyyy")</td>
+                                                            <td class="govuk-table__cell">@msd1.LastUpdatedBy</td>
+                                                            <td class="govuk-table__cell">
+                                                                    <div class="govuk-visually-hidden-focusable">
+                                                                         @msd1.ModifiedDate?.ToString("yyyyMMdd")
+                                                                    </div>
+                                                                @msd1.ModifiedDate?.ToString("dd/MM/yyyy")</td>
+                                                            <td class="govuk-table__cell">
+                                                                <a class="link-button"  asp-page-handler="ViewSummary" asp-route-id=@msd1.OurRef>
+                                                                    View
+                                                                </a>
+                                                            </td>
+                                                            <td class="govuk-table__cell">
+                                                                <a class="link-button" asp-page-handler="EditSubmission" asp-route-id=@msd1.OurRef>
+                                                                    Edit
+                                                                </a>
+                                                            </td>
+                                                            <td class="govuk-table__cell">
+                                                                <a class="link-button" asp-page-handler="DeleteSubmission" asp-route-id=@msd1.OurRef>
+                                                                    Delete
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                }
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</main>
+@section Stylesheets {
+    <link href="~/js/sortableTable/sortable-table.css" rel="stylesheet" />
+    <link href="~/css/searchAdmin.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/js/admin/msd1_submission.js"></script>
+    <script src="~/js/sortableTable/sortable-table.js"></script>
+    <script src="~/js/maintainscroll.jquery.js/maintainscroll.min.js"></script>
+    <script src="~/js/clearbutton.js"></script>
+
+    <script>
+      var statPortsList =  @Html.Raw(Json.Serialize(Model.StatPortsList));
+    (function () {
+       SortableTable(document.getElementById("SubmissionSummaryTable"));
+        })();
+    </script>
+}
+

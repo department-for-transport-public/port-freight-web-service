@@ -1,0 +1,58 @@
+﻿@page
+@model AddUserModel
+@{
+}
+<main id="main" tabindex="-1">
+<a class="govuk-back-link"asp-page="/Index">Back</a>
+<div class="govuk-main-wrapper">
+   
+     <div class="govuk-body">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <div class="govuk-form-group">
+                    <form method="post">
+                        <h2 class="govuk-heading-l">
+                            @{
+                                if (Model.Saved)
+                                {
+                                    @:User has been added
+                                }
+                            }
+                        </h2>
+                        <span class="govuk-error-message">
+                            @Html.ValidationMessage("CustomError")
+                        </span>
+                        <span class="govuk-caption-m">
+                            @Html.ValidationMessage("Success")
+                        </span>
+                        <h1 class="govuk-heading-l">Invite user</h1>
+                        <div class="govuk-form-group">
+                            <span>
+                                @if (Model.ResendInvite)
+                                {
+                                    <button class="link-button" type="submit"
+                                            asp-page-handler="ResendInvite" style="color:black">
+                                        Resend invite
+                                    </button>
+                                }
+                            </span>
+                            <br />
+                            <label class="govuk-label">Email</label>
+                            <span asp-validation-for="Email" class="govuk-error-message"></span>
+                            <input class="govuk-input" asp-for="Email" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label">Sender ID</label>
+                            <span asp-validation-for="SenderID" class="govuk-error-message"></span>
+                            <input class="govuk-input" asp-for="SenderID" />
+                        </div>
+                        <div class="govuk-form-group">
+                            <button class="govuk-button" type="submit" asp-page-handler="AddUser">Invite</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main>

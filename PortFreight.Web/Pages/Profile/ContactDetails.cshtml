@@ -1,0 +1,124 @@
+﻿@page
+@model PortFreight.Web.Pages.Profile.ContactDetailsModel
+@{
+    ViewData["Title"] = "Contact details";
+}
+<a class="govuk-link" asp-page="/Dashboard">Back</a>
+<form method="post">
+    <div id="main" class="govuk-main-wrapper" tabindex="-1">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-third">
+
+                <ul class="tab__nav">
+                    <li>
+                        <a href="#0" class="active govuk-link" data-target="ContactDetails">
+                            Contact details
+                        </a>
+                    </li>
+                    <li>
+                        <a href="RespondentDetails" class="govuk-link" data-target="RespondentDetails">
+                            Respondent details
+                        </a>
+                    </li>
+                    <li>
+                        <a href="PortDetails" class="govuk-link" data-target="PortDetails">
+                            Port details
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Identity/Account/Manage/ChangePassword" class="govuk-link" data-target="ChangePassword">
+                            Change password
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="govuk-grid-column-two-thirds">
+                <div class="tab__content" id="ContactDetails">
+                    @await Html.PartialAsync("_ErrorSummary")
+                    <div class="govuk-grid-row">
+                        <div class="govuk-grid-column-two-thirds">
+                            <p class="govuk-body" role="status">
+                                <span class="alert-success">@Model.SuccessMessage </span>
+                            </p>
+                            <div class="govuk-form-group">
+                                <h1 class="govuk-heading-l"> @ViewData["Title"]</h1>
+                                <p class="govuk-body">Enter your details below</p>
+                            </div>
+
+                            <div class="govuk-form-group">
+                                @Html.HiddenFor(m => m.ContactDetails.SenderId)
+                            </div>
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" asp-for="ContactDetails.CompanyName">
+                                    Company name
+                                </label>
+                                <span asp-validation-for="ContactDetails.CompanyName" class="govuk-error-message"></span>
+                                <input asp-for="ContactDetails.CompanyName" id="ContactDetails_CompanyName" class="govuk-input govuk-input--width-20" autocomplete="company-name">
+                            </div>
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" asp-for="ContactDetails.ContactName">
+                                    Contact name
+                                </label>
+                                <span asp-validation-for="ContactDetails.ContactName" class="govuk-error-message"></span>
+                                <input asp-for="ContactDetails.ContactName" id="ContactDetails_ContactName" class="govuk-input govuk-input--width-20" autocomplete="contact-name">
+                            </div>
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" asp-for="ContactDetails.Phone">
+                                    Phone number
+                                </label>
+                                <span asp-validation-for="ContactDetails.Phone" class="govuk-error-message"></span>
+                                <input asp-for="ContactDetails.Phone" id="ContactDetails_Phone" class="govuk-input govuk-input--width-20" autocomplete="tel">
+                            </div>
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" asp-for="ContactDetails.Addr1">
+                                    Name / Building number
+                                    <span class="govuk-visually-hidden">line 1 of 3</span>
+                                </label>
+                                <span asp-validation-for="ContactDetails.Addr1" class="govuk-error-message"></span>
+                                <input asp-for="ContactDetails.Addr1" id="ContactDetails_Addr1" class="govuk-input" autocomplete="address-line-1">
+                            </div>
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" asp-for="ContactDetails.Addr2">
+                                    Street
+                                    <span class="govuk-visually-hidden">Address line 2 of 3</span>
+                                </label>
+                                <span asp-validation-for="ContactDetails.Addr2" class="govuk-error-message"></span>
+                                <input asp-for="ContactDetails.Addr2" id="ContactDetails.Addr2" class="govuk-input" autocomplete="address-line-2">
+                            </div>
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" asp-for="ContactDetails.City">
+                                    City or town
+                                </label>
+                                <span asp-validation-for="ContactDetails.City" class="govuk-error-message"></span>
+                                <input asp-for="ContactDetails.City" id="ContactDetails_City" class="govuk-input govuk-input--width-20" autocomplete="city">
+                            </div>
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" asp-for="ContactDetails.County">
+                                    County
+                                </label>
+                                <span asp-validation-for="ContactDetails.County" class="govuk-error-message"></span>
+                                <input asp-for="ContactDetails.County" id="ContactDetails_County" class="govuk-input govuk-input--width-20" autocomplete="count">
+                            </div>
+                            <div class="govuk-form-group">
+                                <label class="govuk-label" asp-for="ContactDetails.Postcode">
+                                    Postcode
+                                </label>
+                                <span asp-validation-for="ContactDetails.Postcode" class="govuk-error-message"></span>
+                                <input asp-for="ContactDetails.Postcode" id="ContactDetails_Postcode" class="govuk-input govuk-input--width-10" autocomplete="postcode">
+                            </div>
+                            <div class="govuk-form-group">
+                                <button type="submit" class="govuk-button">
+                                    Save and continue
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+

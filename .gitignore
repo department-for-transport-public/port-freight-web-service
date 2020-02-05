@@ -1,0 +1,10 @@
+**/.vscode/
+**/.vs/
+**/bin/
+**/obj/
+**/wwwroot/lib/
+**/appsettings.*.json
+**/*.csproj.user
+**/Migrations/201*
+**/*.txt*
+node_modules/

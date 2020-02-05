@@ -1,0 +1,104 @@
+﻿@page
+@model AddGlobalPortModel
+@{
+}
+<main id="main" tabindex="-1">
+<div class="govuk-back-link">
+    <a class="govuk-link" asp-page="/Index">Back</a>
+</div>
+<div class="govuk-main-wrapper">
+    <div class="govuk-body">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                @if (Model.Saved)
+                {
+                    <h2 class="govuk-heading-m">
+                        Port has been added
+                    </h2>
+                }
+                <span class="govuk-error-message">@Html.ValidationMessage("CustomError")</span>
+                <form method="post">
+                    <h1 class="govuk-heading-l">Add Global Port</h1>
+                    <div class="govuk-form-group">
+                        <span asp-validation-for="GlobalPort.Locode" class="govuk-error-message"></span>
+                        <label class="govuk-label" asp-for="GlobalPort.Locode"></label>
+                        <input class="govuk-input" asp-for="GlobalPort.Locode" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <span asp-validation-for="GlobalPort.PortName" class="govuk-error-message"></span>
+                        <label class="govuk-label" asp-for="GlobalPort.PortName"></label>
+                        <input class="govuk-input" asp-for="GlobalPort.PortName" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <span asp-validation-for="GlobalPort.CountryCode" class="govuk-error-message"></span>
+                        <label class="govuk-label" asp-for="GlobalPort.CountryCode"></label>
+                        <input class="govuk-input" asp-for="GlobalPort.CountryCode" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <span asp-validation-for="GlobalPort.StatisticalPort" class="govuk-error-message"></span>
+                        <label class="govuk-label" asp-for="GlobalPort.StatisticalPort"></label>
+                        <input class="govuk-input" asp-for="GlobalPort.StatisticalPort" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <span asp-validation-for="GlobalPort.ForMsd1ReportingPort" class="govuk-error-message"></span>
+                        <div class="govuk-checkboxes">
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" asp-for="GlobalPort.ForMsd1ReportingPort" type="checkbox">
+                                <label class="govuk-label govuk-checkboxes__label" asp-for="GlobalPort.ForMsd1ReportingPort"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-form-group">
+                        <span asp-validation-for="GlobalPort.ForMsd1LoadUnload" class="govuk-error-message"></span>
+                        <div class="govuk-checkboxes">
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" asp-for="GlobalPort.ForMsd1LoadUnload" type="checkbox">
+                                <label class="govuk-label govuk-checkboxes__label" asp-for="GlobalPort.ForMsd1LoadUnload"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-form-group">
+                        <span asp-validation-for="GlobalPort.ForMsd2" class="govuk-error-message"></span>
+                        <div class="govuk-checkboxes">
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" asp-for="GlobalPort.ForMsd2" type="checkbox">
+                                <label class="govuk-label govuk-checkboxes__label" asp-for="GlobalPort.ForMsd2"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-form-group">
+                        <span asp-validation-for="GlobalPort.ForMsd3" class="govuk-error-message"></span>
+                        <div class="govuk-checkboxes">
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" asp-for="GlobalPort.ForMsd3" type="checkbox">
+                                <label class="govuk-label govuk-checkboxes__label" asp-for="GlobalPort.ForMsd3"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-form-group">
+                        <span asp-validation-for="GlobalPort.ForMsd4" class="govuk-error-message"></span>
+                        <div class="govuk-checkboxes">
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" asp-for="GlobalPort.ForMsd4" type="checkbox">
+                                <label class="govuk-label govuk-checkboxes__label" asp-for="GlobalPort.ForMsd4"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-form-group">
+                        <span asp-validation-for="GlobalPort.ForMsd5" class="govuk-error-message"></span>
+                        <div class="govuk-checkboxes">
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" asp-for="GlobalPort.ForMsd5" type="checkbox">
+                                <label class="govuk-label govuk-checkboxes__label" asp-for="GlobalPort.ForMsd5"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-form-group">
+                        <button class="govuk-button" type="submit" asp-page-handler="AddUser">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</main>

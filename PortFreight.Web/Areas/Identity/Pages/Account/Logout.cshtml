@@ -1,0 +1,18 @@
+﻿@page
+@model LogoutModel
+@{
+    ViewData["Title"] = "You have successfully logged out";
+}
+
+<div id="main" class="govuk-main-wrapper" tabindex="-1">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">
+                @ViewData["Title"]
+            </h1>
+            <p class="govuk-body">
+                To access the site again you will need to <a class="govuk-link" asp-area="Identity" asp-page="/Account/Login">log in</a>
+            </p>
+        </div>
+    </div>
+</div>

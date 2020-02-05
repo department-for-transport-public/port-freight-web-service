@@ -1,0 +1,30 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Verify your account";
+
+}
+
+<div id="main" class="govuk-main-wrapper" tabindex="-1">
+    <h1 class="govuk-heading-l">@ViewData["Title"]</h1>
+    <div class="app-prose-scope">
+        <div class="successBanner">
+            <h4 class="emailLink">
+                We have sent you an email with a link to verify your account
+            </h4>
+        </div>
+        <div class="emailMessage">
+            <div class="innerEmailMessage">
+                <p class="govuk-body">
+                    If you do not receive an email in the next 10 minutes, check your spam folder before contacting
+                    <a class="govuk-link" href="maritimestats.help@dft.gov.uk">maritimestats.help@dft.gov.uk</a>
+                </p>
+                <p class="govuk-body">
+                    The email address you provided was @Model.Input.Email .
+                    If this is incorrect, <a class="govuk-link" asp-area="Identity" asp-page="/Account/PreRegister">create an account</a>
+                    with the correct email address.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

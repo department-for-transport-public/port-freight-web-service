@@ -1,0 +1,92 @@
+﻿@page
+@model PortFreight.Web.Pages.DashboardModel
+@{
+    ViewData["Title"] = "Maritime Statistics";
+}
+<main class="govuk-main-wrapper " id="main" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">
+                @ViewData["Title"]
+            </h1>
+
+        </div>
+    </div>
+<section>
+             <h2 class="govuk-heading-l">Online returns</h2>
+        <hr aria-hidden="true">
+  <div class="inner-section">
+    <div class="govuk-grid-row">
+        @if (ViewBag.IsAgentOrLine)
+        {
+        <div class="govuk-grid-column-one-third">
+           
+        
+         <h3 class="govuk-heading-m"> Create new return</h3>
+            <p class="govuk-body">Submit an agent/line freight movement return online.</p>
+          <p class="govuk-body">
+              <a class="govuk-link" asp-page="/Msd1/Index">Submit new return</a>
+          </p>
+        </div>
+        <div class="govuk-grid-column-one-third">
+            <h3 class="govuk-heading-m">Submitted Returns</h3>
+            <p class="govuk-body">View your previously submitted returns.</p>
+            <p class="govuk-body"><a class="govuk-link" asp-page="/Summary/SubmissionSummary">View submitted returns </a></p>
+        </div>
+    
+        }
+               
+        @if (ViewBag.IsPort)
+        {
+              <div class="govuk-grid-column-one-third">
+                 <h3 class="govuk-heading-m">Quarterly Returns</h3>
+                 <p class="govuk-body">Submit, view or amend a quarterly return.</p>
+                <p class="govuk-body"><a class="govuk-link" asp-page="/QuarterlyReturn/Checklist">Port Quarterly Returns </a></p>
+             </div>
+        }
+            </div>
+    </div>
+</section>
+<section>
+    <h2 class="govuk-heading-l">File uploads</h2>
+    <hr aria-hidden="true">
+    <div class="inner-section">
+        <div class="spacer"></div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-third">
+                <h3 class="govuk-heading-m">Flat Files</h3>
+                    <p class="govuk-body">Submit maritime statistics in a flat file (also known as ASCII).</p>
+                    <p class="govuk-body"><a class="govuk-link"  asp-page="/ASCII/Index">Upload Flat Files</a></p>
+                </div>
+                <div class="govuk-grid-column-one-third">
+                    <h3 class="govuk-heading-m">API Key</h3>
+                    <p class="govuk-body">Generate an API key to send statistics automatically via the API.</p>
+                    <p class="govuk-body"><a class="govuk-link" asp-page="/ApiKey/ApiKey">Generate API Keys</a></p>
+            </div>
+        </div> 
+    </div>
+</section>
+<section>
+<h2 class="govuk-heading-l">Administrative services</h2>
+<hr aria-hidden="true">
+ <div class="inner-section">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+          <h3 class="govuk-heading-m">Colleagues</h3>
+            <p class="govuk-body">Add a new colleague or view your current colleagues.</p>
+            <p class="govuk-body"><a class="govuk-link" asp-page="/Profile/InviteColleague">Add / View Colleagues</a></p>
+        </div>
+        <div class="govuk-grid-column-one-third">
+            <h3 class="govuk-heading-m">Details</h3>
+            <p class="govuk-body">Update your contact details, respondent details and password.</p>
+            <p class="govuk-body"><a class="govuk-link" asp-page="/Profile/ContactDetails">Update your details</a></p>
+        </div>
+        <div class="govuk-grid-column-one-third">
+                <h3 class="govuk-heading-m">Help and Information</h3>
+                <p class="govuk-body">Help with using this service and information about why we collect this data.</p>
+                <p class="govuk-body"><a class="govuk-link" asp-page="/Help/Information">View Help and Information</a></p>
+        </div>
+    </div> 
+</div>
+</section>
+  

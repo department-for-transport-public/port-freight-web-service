@@ -1,0 +1,58 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.MSD3.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<div class="govuk-back-link">
+    <a class="govuk-link" asp-page="./Index">Back to List</a>
+</div>
+<main id="main" tabindex="-1">
+<div class="govuk-main-wrapper">
+
+<h1 class="govuk-heading-l">Edit Msd3</h1>
+
+    <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post">
+            <div class="govuk-form-group">
+                <span class="govuk-error-message">@Html.ValidationMessage("CustomError")</span>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="govuk-error-message"></div>
+            <input type="hidden" asp-for="Msd3.Id" />
+            <input type="hidden" asp-for="Msd3.DataSourceId" />
+            <input type="hidden" asp-for="Msd3.FileRefId" />
+            <div class="govuk-form-group">
+                <label asp-for="Msd3.SenderId" class="govuk-label"></label>
+                <span asp-validation-for="Msd3.SenderId" class="govuk-error-message"></span>
+                <input asp-for="Msd3.SenderId" class="govuk-input" />
+            </div>
+            <div class="govuk-form-group">
+                <label asp-for="Msd3.ReportingPort" class="govuk-label"></label>
+                <span asp-validation-for="Msd3.ReportingPort" class="govuk-error-message"></span>
+                <input asp-for="Msd3.ReportingPort" class="govuk-input" />
+            </div>
+            <div class="govuk-form-group">
+                <label asp-for="Msd3.Year" class="govuk-label"></label>
+                <span asp-validation-for="Msd3.Year" class="govuk-error-message"></span>
+                <input asp-for="Msd3.Year" class="govuk-input" />
+            </div>
+            <div class="govuk-form-group">
+                <label asp-for="Msd3.Quarter" class="govuk-label"></label>
+                <span asp-validation-for="Msd3.Quarter" class="govuk-error-message"></span>
+                <input asp-for="Msd3.Quarter" class="govuk-input" />
+            </div>
+            <input type="hidden" asp-for="Msd3.CreatedDate" class="govuk-input" />
+            
+            <div class="govuk-form-group">
+                <button type="submit" class="govuk-button">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</main>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

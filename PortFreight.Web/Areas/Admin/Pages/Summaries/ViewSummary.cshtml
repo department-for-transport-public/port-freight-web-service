@@ -1,0 +1,55 @@
+﻿@page
+@model ViewSummaryModel
+@{
+}
+<main id="main" tabindex="-1">
+        <div class="govuk-back-link">
+            <a class="govuk-link" asp-page="/Submissions/FindSubmission">Back</a>
+        </div>
+ <h1 class="govuk-heading-l">View Summary</h1>
+            <div class="govuk-body">
+                <form method="post">
+                    @if (Model.CargoSummaries != null)
+                    {
+                        <div class="govuk-form-group">
+                            <h2 class="govuk-heading-m" style="margin-top:2em">
+                                Cargo summary
+                            </h2>
+                        </div>
+                        <div class="govuk-form-group">
+                            <span class="govuk-error-message">@Html.ValidationMessage("CustomError")</span>
+                            <span class="govuk-heading-m" style="font-weight:700; color: #28a197">@Model.SuccessMessage</span>
+                        </div>
+                        <table class="govuk-table">
+                            <thead class="govuk-table__head">
+                                <tr class="govuk-table__row">
+                                    <td class="govuk-table__header">Category code</td>
+                                    <td class="govuk-table__header">Units with cargo</td>
+                                    <td class="govuk-table__header">Units without cargo</td>
+                                    <td class="govuk-table__header">Total units</td>
+                                    <td class="govuk-table__header">Gross weight</td>
+                                    <td class="govuk-table__header">Description</td>
+                                </tr>
+                            </thead>
+                            <tbody class="govuk-table__body">
+                                @foreach (var sum in @Model.CargoSummaries)
+                                {
+                                    <tr class="govuk-table__row">
+                                        <td class="govuk-table__cell">@sum.CategoryCode</td>
+                                        <td class="govuk-table__cell">@sum.UnitsWithCargo</td>
+                                        <td class="govuk-table__cell">@sum.UnitsWithoutCargo</td>
+                                        <td class="govuk-table__cell">@sum.TotalUnits</td>
+                                        <td class="govuk-table__cell">@sum.GrossWeight</td>
+                                        <td class="govuk-table__cell">@sum.Description</td>
+                                        <td>
+                                            <button type="submit" asp-page-handler="Edit" asp-route-SumId="@sum.Id" class="link-button">edit</button>
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </form>
+            </div>
+</main>

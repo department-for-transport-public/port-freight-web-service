@@ -1,0 +1,54 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.WorldFleet.ShipListUploadModel
+
+<main id="main" tabindex="-1">
+    <a class="govuk-link" asp-page="/Index">Back</a>
+    <div class="govuk-main-wrapper">
+        <h1 class="govuk-heading-l">Upload Ship List</h1>
+
+        <form method="post" enctype="multipart/form-data">
+
+            <label class="govuk-heading-m" for="Files">
+                Select csv file to be uploaded
+            </label>
+            <input class="govuk-file-upload js-enabled jsFileUpload" type="file" name="UploadedFile" accept=".csv" />
+
+
+            <div class="spacer"></div>
+                <div style="display:none" class="jsSubmitButton">
+                    <button asp-page-handler="UploadFile" type="submit" class="govuk-button">Upload File</button>
+                </div>
+
+
+                @if (TempData.Peek("ShipListUploadRequested") != null)
+                {
+                    <div class="govuk-form-group">
+                        <div class="govuk-heading-m">
+                            <span class=@(ModelState.ValidationState == Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid  ?"alert-success" :"govuk-error-message")>@Model.UploadMethodRetunMessage</span>
+                        </div>
+                    </div>
+                }
+
+
+        </form>
+    </div>
+</main>
+
+@section Scripts
+    {
+    <script>
+
+        $(".jsFileUpload").change(function () {
+            if ($(".jsFileUpload").val() > "") {
+                $(".jsSubmitButton").show();
+                $(".govuk-error-message").hide();
+                $(".alert-success").hide();
+            }
+            else {
+                $(".jsSubmitButton").hide();
+            }
+        });
+       
+    </script>
+}
+

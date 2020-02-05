@@ -1,0 +1,17 @@
+﻿@page
+@model PortFreight.FileProcessor.Pages.IndexModel
+@{
+    ViewData["Title"] = "File Processing";
+}
+<form method="post">
+    <div class="govuk-main-wrapper">
+        <div class="govuk-grid-row">
+           <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">
+                @ViewData["Title"]
+            </h1>
+            <h2 class="govuk-heading-m">Status: @Model.FileStatus</h2>
+        </div>
+        </div>
+    </div>
+</form>

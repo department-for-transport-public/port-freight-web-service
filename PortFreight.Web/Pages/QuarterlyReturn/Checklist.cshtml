@@ -1,0 +1,135 @@
+﻿@page
+@model ChecklistModel
+@{
+    ViewData["Title"] = "Quarterly returns";
+}
+@{
+
+    var currentQtr = (@DateTime.Now.Month + 2) / 3;
+    var currentYear = @DateTime.Now.Year;
+    var previousYear = @DateTime.Now.AddYears(-1).Year;
+    var currentYearQtrsCargo = @Model.CargoQuarters != null ? @Model.CargoQuarters.Where(w => w.Year == currentYear).Select(c => c.Quarter) : null;
+    var previousYearQtrsCargo = @Model.CargoQuarters != null ? @Model.CargoQuarters.Where(w => w.Year == previousYear).Select(c => c.Quarter) : null;
+    var currentYearQtrsAgent = @Model.AgentQuarters != null ? @Model.AgentQuarters.Where(w => w.Year == currentYear).Select(c => c.Quarter) : null;
+    var previousYearQtrsAgent = @Model.AgentQuarters != null ? @Model.AgentQuarters.Where(w => w.Year == previousYear).Select(c => c.Quarter) : null;
+    var countAll = currentYearQtrsCargo == null ? 0 : currentYearQtrsCargo.Count();
+}
+<main id="main" tabindex="-1">
+<a class="govuk-link" asp-page="/Dashboard">Back</a>
+<div class="govuk-main-wrapper">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form id="frmReturn" method="post">
+                <div class="govuk-form-group">
+                    <label class="govuk-heading-m">
+                        Ports<br />
+                        <span class="govuk-hint">Select port</span>
+                    </label>
+                    <span asp-validation-for="Input.ReportingPort" class="govuk-error-message"></span>
+                    <select asp-for="Input.ReportingPort" class="govuk-select" onchange="javascript: reloadPage(this);return false;" id="_ddlReportingPort" asp-items="@Model.ReportingPorts"></select>
+                </div>
+                <h1 class="govuk-heading-xl">
+                    @ViewData["Title"]
+                    <span class="govuk-hint">
+                        Select a quarterly return to submit, view or amend
+                    </span>
+                </h1>
+                @if (Model.ReportingPorts != null)
+                {
+                    <h2 class="govuk-heading-l"> @currentYear</h2>
+                    <input type="hidden" name="year" value="@currentYear" />
+                    @for (int i = 1; i <= 4; i++)
+                    {
+                        var cssAgent = "agent-qtr" + @i;
+                        var cssCargo = "cargo-qtr" + @i;
+                        var idAgent = "agentQTR" + @i;
+                        var idCargo = "cargoQTR" + @i;
+                        <div class="govuk-form-group">
+                            <span class="govuk-heading-m">Quarter @i</span>
+                            <table id="currentYearlist" class="govuk-table">
+                                <tbody class="govuk-table__body">
+                                    <tr id="@idCargo" class="govuk-table__row">
+                                        <td class="govuk-table__cell">
+                                    
+                                                <input type="submit" aria-label="Quarterly cargo return for @currentYear Quarter @i" asp-route-id="@i@currentYear" class="btn-button" value="Quarterly cargo return" asp-page-handler="CargoReturn" />
+                                            
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            <span class="@cssCargo"></span>
+                                        </td>
+                                    </tr>
+                                    <tr id="@idAgent" class="govuk-table__row">
+                                        <td class="govuk-table__cell">
+                                                <input type="submit" aria-label="Quarterly shipping line/agent return for @currentYear Quarter @i" asp-route-id="@i@currentYear" class="btn-button" value="Quarterly shipping line/agent return" asp-page-handler="AgentReturn" />
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            <span class="@cssAgent"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+
+                    <h2 class="govuk-heading-l"> @previousYear</h2>
+                    @for (int i = 1; i <= 4; i++)
+                    {
+                        var csspAgent = "agent-pqtr" + @i;
+                        var csspCargo = "cargo-pqtr" + @i;
+                        var idpAgent = "agentPQTR" + @i;
+                        var idpCargo = "cargoPQTR" + @i;
+                        <div class="govuk-form-group">
+                            <span class="govuk-heading-m">Quarter @i</span>
+                            <table id="previousYearList" class="govuk-table">
+                                <tbody class="govuk-table__body">
+                                    <tr id="@idpCargo" class="govuk-table__row">
+                                        <td class="govuk-table__cell">
+                                                <input type="submit" aria-label="Quarterly cargo return for @previousYear Quarter @i" asp-route-id="@i@previousYear" asp-route-data="" class="btn-button" value="Quarterly cargo return" asp-page-handler="CargoReturn" />
+                                      
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            <span class="@csspCargo"></span>
+                                        </td>
+                                    </tr>
+                                    <tr id="@idpAgent" class="govuk-table__row">
+                                        <td class="govuk-table__cell">
+                                                <input type="submit" aria-label="Quarterly shipping line/agent return for @previousYear Quarter @i" asp-route-id="@i@previousYear" class="btn-button" value="Quarterly shipping line/agent return" asp-page-handler="AgentReturn" />
+                                           
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            <span class="@csspAgent"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                }
+            </form>
+        </div>
+    </div>
+</div>
+</main>
+
+@section Scripts {
+    <script src="~/js/checklist/checklist.js"></script>
+    <script>
+        var currentQtr = @currentQtr;
+        var currentYear = @currentYear;
+        var previousYear = @DateTime.Now.AddYears(-1).Year;
+        var currentYearQtrsCargo = @Html.Raw(Json.Serialize(currentYearQtrsCargo));
+        var previousYearQtrsCargo = @Html.Raw(Json.Serialize(previousYearQtrsCargo));
+        var currentYearQtrsAgent = @Html.Raw(Json.Serialize(currentYearQtrsAgent));
+        var previousYearQtrsAgent = @Html.Raw(Json.Serialize(previousYearQtrsAgent));
+
+        function reloadPage(port) {
+            if (window.location.href.indexOf("?") < 0) {
+                window.location.href = window.location.href + "?=" + port.value;
+            }
+            else {
+                var newURL = window.location.href;
+                window.location.href = newURL.substring(0, newURL.indexOf('?')) + "?=" + port.value;
+                }
+           }
+    </script>
+}

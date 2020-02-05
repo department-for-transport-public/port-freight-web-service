@@ -1,0 +1,26 @@
+﻿@page
+@{
+    ViewData["Title"] = "Submit maritime statistics";
+}
+<div id="main" class="govuk-main-wrapper" tabindex="-1">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">
+                @ViewData["Title"]
+            </h1>
+            <h2 class="govuk-heading-m">I have a maritime statistics account</h2>
+            <p class="govuk-body">Sign in to your maritime statistics account</p>
+         
+         
+            <a ondragstart="return false;" ondrop="return false;" asp-area="Identity" asp-page="Account/Login" role="button" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8">
+                Sign in
+            </a>
+            
+            <h2 class="govuk-heading-m">I do not have an account</h2>
+            <p class="govuk-body">To submit maritime statistics you need to set up an account</p>
+            <a ondragstart="return false;" ondrop="return false;" asp-area="Identity" asp-page="Account/CreateAccount" role="button" class="govuk-button">
+                Create an account
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.MSD3.MSD3Agents.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="govuk-body">
+    <div class="govuk-back-link">
+        <a class="govuk-link" asp-page="./Index" asp-route-id="@Model.Msd3agent.Msd3Id">Back</a>
+    </div>
+    <div class="govuk-main-wrapper">
+        <h1 class="govuk-heading-l">Details</h1>
+        <table class="govuk-table">
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__header"> @Html.DisplayNameFor(model => model.Msd3agent.SenderId) </td>
+                    <td class="govuk-table__header"> @Html.DisplayNameFor(model => model.Msd3agent.Msd3Id) </td>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body"> 
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell"> @Html.DisplayFor(model => model.Msd3agent.SenderId) </td>
+                    <td class="govuk-table__cell"> @Html.DisplayFor(model => model.Msd3agent.Msd3Id) </td>
+                    <td class="govuk-table__cell"> <a class="govuk-link link-button" asp-page="./Edit" asp-route-id="@Model.Msd3agent.Id" >Edit</a> </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -1,0 +1,37 @@
+﻿@page
+@{
+    ViewData["Title"] = "Success";
+}
+<div class="govuk-width-container">
+    <main class="govuk-main-wrapper govuk-main-wrapper--l" id="main" role="main" tabindex="-1">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <form method="post">
+                    <div class="govuk-panel govuk-panel--confirmation">
+                        <h1 class="govuk-panel__title">
+                            Submission complete
+                        </h1>
+                    </div>
+                    <div class="govuk-form-group">
+                        <p class="govuk-body">
+                            You successfully submitted the quarterly cargo return.
+                        </p>
+                    </div>
+                        <div class="govuk-form-group">
+                            <h2 class="govuk-heading-s">
+                                To view other outstanding returns,
+                                <a class="govuk-link" asp-page="/QuarterlyReturn/Checklist" class="govuk-link">
+                                    go to the quarterly returns page
+                                </a>
+                            </h2>
+                        </div>
+                        <div class="govuk-form-group">
+                            <h2 class="govuk-heading-s">
+                                <a class="govuk-link" asp-page="/Dashboard">Return to dashboard</a>
+                            </h2>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>

@@ -1,0 +1,135 @@
+﻿@page
+@model PortFreight.Web.Pages.Summary.SubmissionSummaryModel
+@{
+    ViewData["Title"] = "Submission Summary";
+}
+<main id="main" tabindex="-1">
+<a class="govuk-link" asp-page="../Dashboard">Back</a>
+<div class="govuk-main-wrapper">
+    <div class="govuk-body">
+        <div class="govuk-form-group">
+            <h1 class="govuk-heading-m">Submission Summary</h1>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                @if (Model.Msd1s.Count > 0)
+                {
+                    <noscript>
+                        <span class="govuk-warning-text">What do we need here</span>
+                    </noscript>
+                    <div class="govuk-form-group">
+                        <span class="govuk-error-message"></span>
+                        <span class="govuk-caption-m">Filter by IMO, submission ref, and email</span>
+                        <input id="filterInput" type="text" aria-label="Enter IMO, submission reference or email to filter results by" class="govuk-input govuk-input--width-20">
+                        <button id="filter" class="govuk-button" onclick="filterTable()" type="button">Filter</button>
+                        <div id="currentFilterList">
+                            <p class="govuk-heading-s" id="filterHeading"></p>
+                            <ul id="currentFilters" class="govuk-list--bullet"></ul>
+                            <a href="#" class="link-button" id="clearBtn" onclick="resetTable()">Clear filter</a>
+                        </div>
+                    </div>
+                    <form method="post">
+                    @if (Model.IsEdited)
+                    {
+                        <div class="govuk-panel govuk-panel--confirmation">
+                            <h3 class="govuk-panel__title">
+                                Record successfully amended
+                            </h3>
+                        </div>
+                    }
+                    <table class="govuk-table" id="SubmissionSummaryTable">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th aria-sort="none" class="govuk-table__header">
+                                    <button type="button" data-index="0">IMO</button>
+                                </th>
+                                <th aria-sort="none" class="govuk-table__header">
+                                    <button type="button" data-index="1">Submission ref</button>
+                                </th>
+                                <th aria-sort="none" class="govuk-table__header">
+                                    <button type="button" data-index="2">Year</button>
+                                </th>
+                                <th aria-sort="none" class="govuk-table__header">
+                                    <button type="button" data-index="3">Quarter</button>
+                                </th>
+                                <th aria-sort="none" class="govuk-table__header">
+                                    <button type="button" data-index="4">Voyages</button>
+                                </th>
+                                <th aria-sort="none" class="govuk-table__header">
+                                    <button type="button" data-index="5">Submitted by</button>
+                                </th>
+                                <th aria-sort="none" class="govuk-table__header">
+                                    <button type="button" data-index="6">Submitted on</button>
+                                </th>
+                                <th aria-sort="none" class="govuk-table__header">
+                                    <button type="button" data-index="7">Last updated</button>
+                                </th>
+                                 <th aria-label="Action" class="govuk-visually-hidden">
+                                  Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            @foreach (var msd1 in @Model.Msd1s)
+                            {
+                                <tr class="govuk-table__row">
+                                    <td class="govuk-table__cell">@msd1.Imo</td>
+                                    <td class="govuk-table__cell">@(msd1.RecordRef == null ? @msd1.Msd1Id : @msd1.RecordRef)</td>
+                                    <td class="govuk-table__cell">@msd1.Year</td>
+                                    <td class="govuk-table__cell">@msd1.Quarter</td>
+                                    <td class="govuk-table__cell">@msd1.NumVoyages</td>
+                                    <td class="govuk-table__cell">@msd1.UserName</td>
+                                    <td class="govuk-table__cell">
+                                         <div class="govuk-visually-hidden-focusable">
+                                            @msd1.CreatedDate.ToString("yyyyMMdd")
+                                        </div>
+                                        @msd1.CreatedDate.ToString("dd/MM/yyyy")
+                                    </td>
+                                    <td class="govuk-table__cell">
+                                         <div class="govuk-visually-hidden-focusable">
+                                              @msd1.ModifiedDate?.ToString("yyyyMMdd")
+                                        </div>
+                                        @msd1.ModifiedDate?.ToString("dd/MM/yyyy")
+                                    </td>
+                                    <td class="govuk-table__cell"><button aria-label="View @msd1.Imo IMO number submitted by @msd1.UserName" class="link-button" type="submit" asp-page-handler="ViewSummary" asp-route-id=@msd1.Msd1Id>View</button></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <span>
+                        <span>Number of results: </span>
+                        <button class="link-button" aria-label="display 50 results" type="submit" asp-page-handler="GetNumberOfResults" asp-route-number="50" onclick="clearSessionStorage()">50</button>
+                        <button class="link-button" aria-label="display 100 results"type="submit" asp-page-handler="GetNumberOfResults" asp-route-number="100" onclick="clearSessionStorage()">100</button>
+                        <button class="link-button" aria-label="display 150 results"type="submit" asp-page-handler="GetNumberOfResults" asp-route-number="150" onclick="clearSessionStorage()">150</button>
+                        <button class="link-button" aria-label="display all results"type="submit" asp-page-handler="GetNumberOfResults" asp-route-number="" onclick="clearSessionStorage()">All</button>
+                    </span>
+                    </form>
+                }
+                else
+                {
+                    <div class="govuk-form-group">
+                        <h3 class="govuk-heading-m">You have made no submissions</h3>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+@section Stylesheets {
+    <link href="~/js/sortableTable/sortable-table.css" rel="stylesheet" />
+
+}
+@section Scripts {
+    <script src="~/js/sortableTable/TableFilter.js"></script>
+    <script src="~/js/sortableTable/sortable-table.js"></script>
+    <script>
+        const HtmlTable = document.getElementById("SubmissionSummaryTable");
+        
+        (function () {
+            new SortableTable(HtmlTable);
+            ReadyPage(HtmlTable);
+        })();
+    </script>
+}

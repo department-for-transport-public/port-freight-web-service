@@ -1,0 +1,24 @@
+@{
+    if (ViewData.ModelState.Values.Any(x => x.Errors.Count > 0))
+    {
+        <div class="govuk-error-summary" aria-labelledby="error-summary-title" role="alert" tabindex="-1" data-module="error-summary">
+            <h2 class="govuk-error-summary__title" id="error-summary-title">
+                There is a problem
+            </h2>
+            <div class="validation-summary-errors">
+                <ul>
+                    @foreach (var erroneousInputs in ViewData.ModelState.Where(s => s.Value.Errors.Count != 0).Select(s => new { s.Value.Errors, s.Key }))
+                    {
+                        var inputKey = (erroneousInputs.Key).Replace('.', '_');
+                        inputKey = inputKey == "SenderType" ? "SenderType_IsAgent" : inputKey;
+                        var id = inputKey + "_error";
+                       
+                               <ul class="govuk-list govuk-error-summary__list">
+                        <li><a class="govuk-error-message" id="@id" href="#@inputKey">@erroneousInputs.Errors[0].ErrorMessage</a></li>
+                        </ul>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+}

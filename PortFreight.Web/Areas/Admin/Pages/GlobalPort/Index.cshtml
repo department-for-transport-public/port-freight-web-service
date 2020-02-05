@@ -1,0 +1,75 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.GlobalPort.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="govuk-body">
+    <div class="govuk-back-link">
+        <a class="govuk-link" asp-page="/Index" style="text-decoration:none">Back</a>
+    </div>
+    <div class="govuk-main-wrapper">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <h3 class="govuk-heading-m">Global Port</h3>
+                <form method="post">
+                    <div class="govuk-form-group">
+                        <span class="govuk-error-message">@Html.ValidationMessage("CustomError")</span>
+                        <span class="govuk-caption-m">Search or part search by Locode or Port name</span>
+                        <span>
+                            <span asp-validation-for="SearchInput" class="govuk-caption-m"></span>
+                            <input asp-for="SearchInput" class="govuk-input govuk-input--width-20">
+                            <button asp-page-handler="Search" class="govuk-button" type="submit">Search</button>
+                        </span>
+                    </div>
+                    <h2 class="alert-success">@Html.ValidationMessage("SuccessMessage")</h2>
+                    <p class="govuk-body">
+                        <a class="govuk-link" asp-page="Create">Create New</a>
+                    </p>
+                    <table class="table">
+                        <thead class="govuk-table">
+                            <tr class="govuk-table__row">
+                                <th class="govuk-table__header">
+                                    @Html.DisplayNameFor(model => model.GlobalPort[0].Locode)
+                                </th>
+                                <th class="govuk-table__header">
+                                    @Html.DisplayNameFor(model => model.GlobalPort[0].PortName)
+                                </th>
+                                <th class="govuk-table__header">
+                                    @Html.DisplayNameFor(model => model.GlobalPort[0].CountryCode)
+                                </th>
+                                <th class="govuk-table__header"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            @if (Model.GlobalPort != null)
+                            {
+                                @foreach (var item in Model.GlobalPort)
+                                {
+                                    <tr class="govuk-table__row">
+                                        <td class="govuk-table__cell">
+                                            @Html.DisplayFor(modelItem => item.Locode)
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            @Html.DisplayFor(modelItem => item.PortName)
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            @Html.DisplayFor(modelItem => item.CountryCode)
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            <a class="govuk-link" asp-page="./Edit" asp-route-id="@item.Locode">Edit</a> |
+                                            <a class="govuk-link" asp-page="./Details" asp-route-id="@item.Locode">Details</a> |
+                                            <a class="govuk-link" asp-page="./Delete" asp-route-id="@item.Locode">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+                    

@@ -1,0 +1,112 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.Organisation.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<main id="main" tabindex="-1">
+    <div class="govuk-body">
+        <div class="govuk-back-link">
+            <a asp-page="Index">Back</a>
+        </div>
+        <div class="govuk-main-wrapper">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <h1 class="govuk-heading-m">Details for @Html.DisplayFor(model => model.Organisation.OrgName)</h1>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <div class="govuk-form-group">
+                        <span asp= class="govuk-error-message"></span>
+                    </div>
+                    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                OrgId
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                @Html.DisplayFor(model => model.Organisation.OrgId)
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                OrgName
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                @Html.DisplayFor(model => model.Organisation.OrgName)
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                IsAgent
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                @Html.DisplayFor(model => model.Organisation.IsAgent)
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                IsLine
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                @Html.DisplayFor(model => model.Organisation.IsLine)
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                IsPort
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                @Html.DisplayFor(model => model.Organisation.IsPort)
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                submits_msd1
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                @Html.DisplayFor(model => model.Organisation.submits_msd1)
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                submits_msd2
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                @Html.DisplayFor(model => model.Organisation.submits_msd2)
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                submits_msd3
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                @Html.DisplayFor(model => model.Organisation.submits_msd3)
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                submits_msd4
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                @Html.DisplayFor(model => model.Organisation.submits_msd4)
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                submits_msd5
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                @Html.DisplayFor(model => model.Organisation.submits_msd5)
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+            <a class = "govuk-link" asp-page="./Edit" asp-route-id="@Model.Organisation.OrgPkId">Edit</a>
+        </div>
+
+    </div>
+</main>

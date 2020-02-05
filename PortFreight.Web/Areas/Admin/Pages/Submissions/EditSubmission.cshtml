@@ -1,0 +1,71 @@
+﻿@page
+@model EditSubmissionModel
+@{
+}
+<main id="main" tabindex="-1">
+<div class="govuk-body">
+    <div class="govuk-back-link">
+        <a class="govuk-link" asp-page="/Submissions/FindSubmission">Back</a>
+    </div>
+    <div class="govuk-main-wrapper">
+        <h1 class="govuk-heading-m">Edit MSD1 return</h1>
+        <span class="govuk-error-message">@Html.ValidationMessage("CustomError")</span>
+        <form method="post">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Imo</label>
+                        <span asp-validation-for="Imo" class="govuk-error-message"></span>
+                        <input asp-for="Imo" class="govuk-input" value="@Model.msd1.Imo" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Ship Name</label>
+                        <span asp-validation-for="ShipName" class="govuk-error-message"></span>
+                        <input asp-for="ShipName" class="govuk-input" value="@Model.msd1.ShipName" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Year</label>
+                        <input asp-for="Year" class="govuk-input" value="@Model.msd1.Year" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Quarter</label>
+                        <input asp-for="Quarter" class="govuk-input" value="@Model.msd1.Quarter" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Number of voyages</label>
+                        <input asp-for="NumVoyages" class="govuk-input" value="@Model.msd1.NumVoyages" />
+                    </div>
+
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Direction</label>
+                        <span id="IsInbound-hint" class="govuk-hint">
+                            Untick if outbound
+                        </span>
+                        <div class="govuk-checkboxes">
+                            <div class="govuk-checkboxes__item">
+                                <input asp-for="IsInbound" class="govuk-checkboxes__input">
+                                <label class="govuk-label govuk-checkboxes__label" for="Inbound">
+                                    Inbound
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Port of load/unload</label>
+                        <span asp-validation-for="AssociatedPort" class="govuk-error-message"></span>
+                        <input asp-for="AssociatedPort" class="govuk-input" value="@Model.msd1.AssociatedPort" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Reporting Port</label>
+                        <span asp-validation-for="ReportingPort" class="govuk-error-message"></span>
+                        <input asp-for="ReportingPort" class="govuk-input" value="@Model.msd1.ReportingPort" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <button type="submit" class="govuk-button">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</main>

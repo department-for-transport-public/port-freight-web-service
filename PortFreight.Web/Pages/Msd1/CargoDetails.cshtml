@@ -1,0 +1,206 @@
+﻿@page
+@model PortFreight.Web.Pages.Msd1.CargoDetailsModel
+@{
+    ViewData["Title"] = "Cargo details for " + @Model.MSD1.ShipName;
+}
+<main id="main" tabindex="-1">
+    @{ if (Model.FromSummary)
+        {
+            <a class="govuk-link" asp-page="SubmitReturn" asp-route-FromSummary="true" asp-route-IsEdited="true">Back</a>
+        }
+        else
+        {
+            <a class="govuk-link" asp-page="VoyageDetails">Back</a>
+        }
+    }
+    <div class="govuk-main-wrapper">
+        @await Html.PartialAsync("../Shared/_ErrorSummary")
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+
+                <span class="govuk-caption-l">Step 4 of 5</span>
+
+                <h1 class="govuk-heading-l">@ViewData["Title"]</h1>
+                <span class="govuk-caption-m">Vessel deadweight</span>
+                <p class="govuk-body-m" id="_hVesselName">@Model.MSD1.Deadweight</p>
+                @if (Model.MSD1.IsInbound == true)
+                {
+                    <span class="govuk-caption-m">Port of loading</span>
+                }
+                else
+                {
+                    <span class="govuk-caption-m">Port of discharge</span>
+                }
+                <p class="govuk-body-m" id="_hVesselName">@Model.MSD1.AssociatedPort</p>
+                <br />
+                <form method="post">
+                    <div class="govuk-form-group" id="_divDirection">
+                        <h2 class="govuk-heading-m">
+                            Type of cargo<br />
+                            <span class="govuk-hint">Select a cargo group and cargo category</span>
+                        </h2>
+                    </div>
+                    <div class="govuk-form-group">
+                        <h2 class="govuk-heading-s">
+                            <a class="govuk-link" asp-page="CargoUserHelp">How should I categorise my cargo?</a>
+                        </h2>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" asp-for="CargoItem.Group">
+                            Cargo group
+                        </label>
+                        <span asp-validation-for="@Model.CargoItem.Group" class="govuk-error-message"></span>
+                        <select asp-for="CargoItem.Group" class="govuk-select" asp-items="@Model.CargoGroup" id="CargoItem_Group">
+                            <option value="">Please Select</option>
+                        </select>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" asp-for="CargoItem.Category">
+                            Cargo category
+                        </label>
+                        <span asp-validation-for="@Model.CargoItem.Category" class="govuk-error-message"></span>
+                        @Html.DropDownListFor(x => Model.CargoItem.Category, new SelectList(Model.CargoCategoriesForCargoGroup.Select (x => x.Description), "groupCode"), "Please Select", htmlAttributes:
+                       new
+                       {
+                           @class = "govuk-select",
+                           id = "CargoItem_Category"
+                       })
+                    </div>
+                    <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.CargoItem.TotalUnits)).HasInnerHtml ? "govuk-form-group--error" :"")">
+                        <div class="govuk-form-group" id="_divNumUnits">
+                            <label class="govuk-label" asp-for="CargoItem.TotalUnits">
+                                Number of units
+                            </label>
+                            <span class="govuk-error-message" asp-validation-for=@Model.CargoItem.TotalUnits></span>
+                            <input id="CargoItem_TotalUnits" asp-for="@Model.CargoItem.TotalUnits" class="govuk-input">
+                        </div>
+                    </div>
+                    <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.CargoItem.UnitsWithCargo)).HasInnerHtml ? "govuk-form-group--error" :"")">
+                        <div class="govuk-form-group" id="_divUnitsWithCargo">
+                            <label class="govuk-label" asp-for="CargoItem.UnitsWithCargo">
+                                Number of units with cargo
+                            </label>
+                            <span class="govuk-hint">Freight vehicles or containers that are transporting goods​</span>
+                            <span class="govuk-error-message" asp-validation-for=@Model.CargoItem.UnitsWithCargo></span>
+                            <input id="CargoItem_UnitsWithCargo" asp-for="@Model.CargoItem.UnitsWithCargo" class="govuk-input">
+                        </div>
+                    </div>
+                    <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.CargoItem.UnitsWithoutCargo)).HasInnerHtml ? "govuk-form-group--error" :"")">
+                        <div class="govuk-form-group" id="_divUnitsWithoutCargo">
+                            <label class="govuk-label" asp-for="CargoItem.UnitsWithoutCargo">
+                                Number of units without cargo
+                            </label>
+                            <span class="govuk-hint">Freight vehicles or containers that are empty</span>
+                            <span class="govuk-error-message" asp-validation-for=@Model.CargoItem.UnitsWithoutCargo></span>
+                            <input id="CargoItem_UnitsWithoutCargo" asp-for="@Model.CargoItem.UnitsWithoutCargo" class="govuk-input">
+                        </div>
+                    </div>
+                    <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.CargoItem.GrossWeight)).HasInnerHtml ? "govuk-form-group--error" :"")">
+                        <div class="govuk-form-group" id="_divGrossWeightOfGoods">
+                            <label class="govuk-label" asp-for="CargoItem.GrossWeight">
+                                Gross weight of goods (tonnes)
+                            </label>
+                            <span id="_spGrossWeightHint" class="govuk-hint">
+                                Exclude the tare weight of the carrying unit
+                            </span>
+                            <span class="govuk-error-message" asp-validation-for=@Model.CargoItem.GrossWeight></span>
+                            <input type="text" id="CargoItem_GrossWeight" asp-for="@Model.CargoItem.GrossWeight" class="govuk-input">
+                        </div>
+                    </div>
+                    <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.CargoItem.Description)).HasInnerHtml ? "govuk-form-group--error" : "")" id="_divDescription">
+                        <label class="govuk-label" asp-for="CargoItem.Description">
+                            Cargo description
+                        </label>
+                        <span id="Description-hint" class="govuk-hint">
+                            Enter your own description of what the cargo was, including how it was transported onto the ship,
+                            for example "fertiliser in bags" or "cement in bulk". This can help us resolve reporting discrepancies.
+                        </span>
+                        <span class="govuk-error-message" asp-validation-for=@Model.CargoItem.Description></span>
+                        <textarea id="CargoItem_Description" class="govuk-textarea" rows="5" aria-describedby="Description-hint" asp-for="@Model.CargoItem.Description"></textarea>
+                    </div>
+                    <div id="divAddCargoItem">
+                        <button type="submit" class="AddCargoIcon" id="addCargoItem" value="Add" asp-page-handler="AddCargo">
+                            <img width="50px" src="~/images/add_another_cargo.svg" alt="">
+                            <span style="font-size:1.5em;">@ViewBag.AddItem</span>
+                        </button>
+                    </div>
+                    <div>
+                        @if (Model.MSD1.CargoSummary.Count > 0)
+                        {
+                            <h2 class="govuk-heading-l">Cargo summary</h2>
+                            <div class="govuk-form-group">
+                                <table id="tblCargoSummary" class="govuk-table">
+                                    <thead class="govuk-table__head">
+                                        <tr class="govuk-table__row">
+                                            <th class="govuk-table__header" scope="col">Cargo category</th>
+                                            <th class="govuk-table__header govuk-table__header--numeric" scope="col">Number of units with cargo</th>
+                                            <th class="govuk-table__header govuk-table__header--numeric" scope="col">Total number of units</th>
+                                            <th class="govuk-table__header govuk-table__header--numeric" scope="col">Gross weight of goods</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="govuk-table__body">
+                                        @foreach (var cargoItem in Model.MSD1.CargoSummary)
+                                        {
+                                            <tr class="govuk-table__row">
+                                                @Html.HiddenFor(modelItem => cargoItem.Id)
+                                                <td class="govuk-table__cell">
+                                                    @Html.DisplayFor(modelItem => cargoItem.Category)
+                                                </td>
+                                                <td class="govuk-table__cell govuk-table__cell--numeric">
+                                                    @Html.Raw(cargoItem.UnitsWithCargo.HasValue && cargoItem.UnitsWithCargo != 0 ? cargoItem.UnitsWithCargo.ToString() : "-")
+                                                </td>
+                                                <td class="govuk-table__cell govuk-table__cell--numeric">
+                                                    @Html.Raw(cargoItem.TotalUnits.HasValue && cargoItem.TotalUnits != 0 ? cargoItem.TotalUnits.ToString() : "-")
+                                                </td>
+                                                <td class="govuk-table__cell govuk-table__cell--numeric">
+                                                    @Html.Raw(cargoItem.GrossWeight.HasValue ? cargoItem.GrossWeight.ToString() : "-")
+                                                </td>
+                                                <td><input type="submit" style="float:right;" asp-route-id=@cargoItem.Id class="link-button" value="Remove" asp-page-handler="RemoveCargo" /></td>
+                                            </tr>
+                                        }
+                                        @if (Model.MSD1.CargoSummary.Count > 1)
+                                        {
+                                            <tr class="govuk-table__row">
+                                                <td class="govuk-table__header">Total</td>
+                                                <td class="govuk-table__cell govuk-table__cell--numeric">@Model.MSD1.CargoSummary.Sum(x => x.UnitsWithCargo).ToString()</td>
+                                                <td class="govuk-table__cell govuk-table__cell--numeric">@Model.MSD1.CargoSummary.Sum(x => x.TotalUnits).ToString()</td>
+                                                <td class="govuk-table__cell govuk-table__cell--numeric">@Model.MSD1.CargoSummary.Sum(x => x.GrossWeight).ToString()</td>
+                                                <td></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                    @if (Model.MSD1.CargoSummary.Count > 0)
+                    {
+                        <div id="divSkipPage" class="govuk-form-group">
+                            <p class="govuk-body">
+                                <a class="govuk-link" asp-page="/Msd1/SubmitReturn" class="govuk-link" style="float:right;">
+                                    I do not want to add another cargo
+                                </a>
+                            </p>
+                        </div>
+                    }
+                    <br /><br />
+                    <div id="divContinueCargoItem" class="govuk-form-group">
+                        <button type="submit" id="continueCargoItem" value="Continue" style="float:left;" asp-page-handler="Continue" class="govuk-button">
+                            Continue
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        var isEditMode = '@Html.Raw(Model.IsEditMode.ToString())';
+        var textInputDisplayDriver = '@Html.Raw(Model.TextInputDisplayDriver.ToString())';
+    </script>
+    <script src="~/js/msd1/CargoDetails.js"></script>
+}

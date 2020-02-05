@@ -1,0 +1,67 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.WorldFleet.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<main id="main" tabindex="-1">
+<div class="govuk-body">
+    <div class="govuk-back-link">
+        <a class="govuk-link" asp-page="Index">Back</a>
+    </div>
+    <div class="govuk-main-wrapper">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <h1 class="govuk-heading-m">Create</h1>
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="govuk-error-summary"></div>
+                    <span class="govuk-error-message">@Html.ValidationMessage("CustomError")</span>
+                    <div class="govuk-form-group">
+                        <label asp-for="WorldFleet.Imo" class="govuk-label">IMO</label>
+                        <span asp-validation-for="WorldFleet.Imo" class="govuk-error-message"></span>
+                        <input asp-for="WorldFleet.Imo" class="govuk-input govuk-input--width-30" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="WorldFleet.ShipName" class="govuk-label">Ship name</label>
+                        <span asp-validation-for="WorldFleet.ShipName" class="govuk-error-message"></span>
+                        <input asp-for="WorldFleet.ShipName" class="govuk-input govuk-input--width-30" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="WorldFleet.CallSign" class="govuk-label">Call sign</label>
+                        <span asp-validation-for="WorldFleet.CallSign" class="govuk-error-message"></span>
+                        <input asp-for="WorldFleet.CallSign" class="govuk-input govuk-input--width-30" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="WorldFleet.FlagCode" class="govuk-label">Flag code</label>
+                        <span asp-validation-for="WorldFleet.FlagCode" class="govuk-error-message"></span>
+                        <input asp-for="WorldFleet.FlagCode" class="govuk-input govuk-input--width-30" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="WorldFleet.Deadweight" class="govuk-label">Deadweight</label>
+                        <span asp-validation-for="WorldFleet.Deadweight" class="govuk-error-message"></span>
+                        <input asp-for="WorldFleet.Deadweight" class="govuk-input govuk-input--width-30" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="WorldFleet.ShipStatus" class="govuk-label">Ship status</label>
+                        <span asp-validation-for="WorldFleet.ShipStatus" class="govuk-error-message"></span>
+                        <input asp-for="WorldFleet.ShipStatus" class="govuk-input govuk-input--width-30" value="S" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="WorldFleet.ShipTypeCode" class="govuk-label">Ship type code</label>
+                        <span asp-validation-for="WorldFleet.ShipTypeCode" class="govuk-error-message"></span>
+                        <select asp-for="WorldFleet.ShipTypeCode" class="govuk-select govuk-input--width-30" style="width:51%" asp-items="Model.ShipTypeCodeList">
+                            <option value="" selected="selected">Please Select</option>
+                        </select>
+                    </div>
+                    <div class="govuk-form-group">
+                        <input type="submit" value="Create" class="govuk-button" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

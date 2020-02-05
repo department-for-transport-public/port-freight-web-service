@@ -1,0 +1,170 @@
+﻿@page
+@model InformationModel
+@{
+    ViewData["Title"] = "Help and information";
+}
+<main id="main" tabindex="-1">
+<a class="govuk-link" asp-page="/Dashboard">Back</a>
+<div class="govuk-main-wrapper">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">@ViewData["Title"]</h1>
+            <p class="govuk-body">
+                For help with providing data, contact the Maritime Statistics Help Desk using:​
+            </p>
+            <h2 class="govuk-label govuk-label--s">
+                Email:
+            </h2>
+            <div class="govuk-body">
+                <a class="govuk-link"  href="mailto:maritimestats.help@dft.gov.uk"> maritimestats.help@dft.gov.uk </a>
+            </div>
+            <h2 class="govuk-label govuk-label--s">
+                Phone:
+            </h2>
+            <div class="govuk-body">
+                <p class="govuk-body">
+                    020 7944 4441​
+                </p>
+                <p class="govuk-body">
+                    This line is monitored during usual office hours. Leave a message and someone will get back to you.
+                </p>
+            </div>
+            <br /><br />
+            <div>
+            <details class="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        Why the data is collected
+                    </span>
+                </summary>
+                <div class="govuk-details__text">
+                    <p class="govuk-body">
+                        ​Maritime Statistics data is required by the European Commission Maritime Statistics Directive (95/64/EU).​
+                        The UK government collected port traffic statistics before the directive was introduced to produce
+                        the port freight statistics series which is used both within and outside of Government to aid decision-making.​
+                    </p>
+                    <p class="govuk-body">
+                        The collection of this data is obligatory in the United Kingdom.​
+                    </p>
+                    <p class="govuk-body">
+                        Detailed data must be provided by the shipping lines or their agents for freight movements
+                        through major UK ports on a minimum quarterly basis. Major ports are those handling more than one million tonnes
+                        of freight per annum as well as some strategically important ports.
+                    </p>
+                    <p class="govuk-body">
+                        In addition, port authorities at major ports must provide the following data:
+                        <ul>
+                        <li>aggregated tonnage and units data quarterly​</li>
+                        <li>agents, lines and ships using the port quarterly</li>
+                        <li>more detailed cargo information annually​</li>
+                        </ul>
+                    </p>
+                    <p class="govuk-body">
+                        At minor ports (those handling less than 1 million tonnes) only annual aggregate figures are required from port authorities.
+                    </p>
+                </div>
+            </details>
+            </div>
+            <div>
+            <details class="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        How the data is used
+                    </span>
+                </summary>
+                <div class="govuk-details__text">
+                    <p class="govuk-body">
+                        The data collected is used to:​
+                        <ul class="govuk-list govuk-list--bullet">
+                            <li>provide background to sector trends​</li>
+                            <li>inform the development and evaluation of policy ​</li>
+                            <li>inform decision making​</li>
+                            <li>develop and test transport and environmental models and forecasts​</li>
+                            <li>respond to requests for information from Parliament, members of the public and international organisations​ </li>
+                            <li>assist in policy development at European level and monitor the impact of European policy measures​</li>
+                        </ul>
+                    </p>
+                    <p class="govuk-body">
+                        The data is used by:​
+                        <ul class="govuk-list govuk-list--bullet">
+                            <li>central government​</li>
+                            <li>local government</li>
+                            <li>devolved administrations</li>
+                            <li>the maritime industry​</li>
+                            <li>transport consultants and academics​</li>
+                            <li>international organisations​</li>
+                        </ul>
+                    </p>
+                </div>
+            </details>
+            </div>
+            <div>
+            <details class="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        How to submit data​
+                    </span>
+                </summary>
+                <div class="govuk-details__text">
+                    <p class="govuk-body">
+                        You can submit data by creating a return through your dashboard on the
+                        Maritime Statistics website whether you're a port, agent or line. ​
+                    </p>
+                    <p class="govuk-body">
+                        Alternatively you can submit data in flat files in a DfT approved format
+                        via "upload a flat file" on your dashboard, for more details on how to do this,
+                        <a class="govuk-link"  href="https://www.gov.uk/government/publications/maritime-statistics-directive-reporting-guidance" target="_blank">
+                        you can read further guidance (link opens in a new window) </a> or contact the Maritime Statistics Help Desk.​
+                    </p>
+                    <p class="govuk-body">
+                        The data can be sent automatically via a Port Community System,
+                        the ports at which this is currently available are Southampton and Felixstowe.​
+                    </p>
+                </div>
+            </details>
+            </div>
+            <div>
+            <details class="govuk-details">
+                <summary class="govuk-details__summary">
+                    <span class="govuk-details__summary-text">
+                        Contact information
+                    </span>
+                </summary>
+                <div class="govuk-details__text">
+                    <p class="govuk-body">
+                        For enquiries about statistical results, general data collection policy or to request data, contact:​
+                    </p>
+                    <label class="govuk-label govuk-label--s">
+                        Post
+                    </label>
+                    <p class="govuk-body">
+                        Department for Transport Maritime Statistics Branch​<br/>
+                        Department for Transport Zone 2/29 Great Minster House​<br/>
+                        33 Horseferry Road​<br/>
+                        London​<br/>
+                        SW1P 4DR<br/>
+                    </p>
+                    <label class="govuk-label govuk-label--s">
+                        Email
+                    </label>
+                    <div class="govuk-body">
+                        <a href="mailto:maritimestats.help@dft.gov.uk"> maritimestats.help@dft.gov.uk </a>
+                    </div>
+                    <label class="govuk-label govuk-label--s">
+                        Phone
+                    </label>
+                    <div class="govuk-body">
+                        <p class="govuk-body">
+                            020 7944 4847
+                        </p>
+                        <p class="govuk-body">
+                            This line is monitored during usual office hours. Leave a message and someone will get back to you.
+                        </p>
+                    </div>
+                </div>
+            </details>
+            </div>
+        </div>
+    </div>
+</div>
+</main>

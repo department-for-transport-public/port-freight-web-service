@@ -1,0 +1,64 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Create password";
+}
+
+<div id="main" class="govuk-main-wrapper" tabindex="-1">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">
+                @ViewData["Title"]
+            </h1>
+            <form method="post">
+                @await Html.PartialAsync("_ErrorSummary")
+                <p class="govuk-body">
+                    Never share your password with anyone.
+                    Your colleagues can create their own account and link it to the same Sender ID
+                </p>
+                <span id="password-hint" class="govuk-hint">
+                    Your password must be at least 12 characters long.
+                    Try creating a password using three random words. For example, ‘BeachCoffeeWinter’ is secure yet easy to remember.
+                </span>
+                @Html.HiddenFor(m => m.Input.SenderId)
+                @Html.HiddenFor(m => m.Input.Email)
+                <div class="govuk-form-group">
+                    <label asp-for="Input.Password" class="govuk-label"></label>
+                    <span asp-validation-for="Input.Password" class="govuk-error-message"></span>
+                    <input asp-for="Input.Password" id="Input_Password" class="govuk-input govuk-input--width-20" />
+                </div>
+                <div class="govuk-form-group">
+                    <label asp-for="Input.ConfirmPassword" class="govuk-label"></label>
+                    <span asp-validation-for="Input.ConfirmPassword" class="govuk-error-message"></span>
+                    <input asp-for="Input.ConfirmPassword" id="Input_ConfirmPassword" class="govuk-input govuk-input--width-20" />
+                </div>
+                <div class="govuk-form-group">
+                    <span asp-validation-for="Input.AgreeToTerms" class="govuk-error-message"></span>
+                    <div class="govuk-checkboxes__item">
+                        <input asp-for="Input.AgreeToTerms" id="Input_AgreeToTerms" class="govuk-checkboxes__input" type="checkbox">
+                        <label asp-for="Input.AgreeToTerms" class="govuk-label govuk-checkboxes__label">
+                            I agree to the <a target="_blank" href="../TermsOfUse">terms of use<span class="govuk-visually-hidden">link opens in a new window</span></a>.
+                        </label>
+
+                    </div>
+                </div>
+                <div class="govuk-form-group">
+                    <button type="submit" class="govuk-button">Create account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var defaultRangeValidator = $.validator.methods.range;
+        $.validator.methods.range = function (value, element, param) {
+            if (element.type === 'checkbox') {
+                return element.checked;
+            } else {
+                return defaultRangeValidator.call(this, value, element, param);
+            }
+        }
+    </script>
+}

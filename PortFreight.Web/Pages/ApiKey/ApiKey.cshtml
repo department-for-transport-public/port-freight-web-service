@@ -1,0 +1,34 @@
+﻿@page
+@model PortFreight.Web.Pages.ApiKeyModel
+
+@{
+    ViewData["Title"] = "Api Key";
+}
+<main id="main" tabindex="-1">
+<a class="govuk-link" asp-page="/Dashboard">Back</a>
+<div class="govuk-main-wrapper">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">@ViewData["Title"]</h1>
+            <form method="post">
+                <p class="govuk-body">
+                    Only use this page if you usually send maritime statistics automatically, via API
+                </p>
+                
+                <div class="govuk-form-group @(ViewData.ModelState.Values.Any(x => x.Errors.Count > 0) ? "govuk-form-group--error" : "")"  >
+                    <span class="govuk-error-message">
+                        @Html.ValidationMessage("ApiKeyError")
+                    </span>
+                    <input class="govuk-input" id="_txtSenderId_Number" type="text" asp-for="ApiKey.Token" placeholder="Generate Api Token" readonly="readonly">
+                </div>
+
+                <div class="govuk-form-group">
+                    <button type="submit" class="govuk-button">
+                        Generate Api Token
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</main>

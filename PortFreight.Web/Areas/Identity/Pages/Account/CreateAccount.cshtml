@@ -1,0 +1,28 @@
+﻿@page
+@model CreateAccountModel
+@{
+    ViewData["Title"] = "Create account";
+}
+<main id="main" tabindex="-1">
+<a class="govuk-link" asp-page="/Index">Back</a>
+<div class="govuk-main-wrapper">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form method="post">
+                <h1 class="govuk-heading-l">
+                    Create an account
+                </h1>
+                <div class="app-prose-scope">
+                    <p class="govuk-body">To use this service, you need a Sender ID.</p>
+                    <p class="govuk-body">A Sender ID is three letters and then three numbers, for example XYZ001.</p>
+            </div>
+                <a asp-area="Identity" asp-page="/Account/PreRegister" role="button" draggable="false" class="govuk-button">
+                    I have a Sender ID
+                </a>
+                <p class="govuk-body">If you do not have a Sender ID or do not know your Sender ID contact
+                <a class="govuk-link" href="mailto:maritimestats.help@dft.gov.uk">maritimestats.help@dft.gov.uk</a> or call 020 7944 4441</p>
+            </form>
+        </div>
+    </div>
+</div>
+</main>

@@ -1,0 +1,119 @@
+﻿@page
+@model PortFreight.Web.Pages.Profile.PortDetailsModel
+@{
+    ViewData["Title"] = "Port details";
+}
+<a class="govuk-link" asp-page="/Dashboard">Back</a>
+<div id="main" class="govuk-main-wrapper" tabindex="-1">
+    @await Html.PartialAsync("_ErrorSummary")
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+            <ul class="tab__nav">
+                <li>
+                    <a href="ContactDetails" class="govuk-link" data-target="ContactDetails">
+                        Contact details
+                    </a>
+                </li>
+                <li>
+                    <a href="RespondentDetails" class="govuk-link" data-target="RespondentDetails">
+                        Respondent details
+                    </a>
+                </li>
+                <li>
+                    <a href="PortDetails" class="active govuk-link" data-target="PortDetails">
+                        Port details
+                    </a>
+                </li>
+                <li>
+                    <a href="/Identity/Account/Manage/ChangePassword" class="govuk-link" data-target="ChangePassword">
+                        Change password
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body" role="status">
+                <span class="alert-success">@Model.SuccessMessage </span>
+            </p>
+            <div class="govuk-form-group">
+                <h1 class="govuk-heading-l">@ViewData["Title"]</h1>
+            </div>
+            <form id="frmPort" method="post">
+                <input class="govuk-input" hidden asp-for="@Model.Input.SenderType" />
+                <div class="govuk-form-group" id="associatedPorts" hidden>
+                    <div class="@(!Model.ModelState.IsValid && Model.Input.SenderPortLocode is null ? "govuk-form-group govuk-form-group--error" : "govuk-form-group")">
+                        <label class="govuk-label" asp-for="@Model.Input.SenderPortLocode" for="Input_SenderPortLocode"></label>
+                        <span class="govuk-hint">The port(s) you are  entering data for</span>
+                        <span asp-validation-for="@Model.Input.SenderPortLocode" class="govuk-error-message"></span>
+                        <div id="Input_SenderPortLocode-container"></div>
+                    </div>
+                    <div class="govuk-form-group"><button type="submit" id="addSenderPort" class="govuk-button" aria-label="Add port" asp-page-handler="AddSenderPort">Save</button></div>
+
+                    @if (Model.RespondentVM != null && Model.RespondentVM.PortList.Count > 0)
+                    {
+                        <div class="govuk-grid-row outerDIV">
+                            <h2 class="govuk-heading-m">Ports</h2>
+                            <table class="govuk-table scroll " id="SubmissionSummaryTable">
+                                <thead class="govuk-table__head">
+                                    <tr class="govuk-table__row">
+                                        <th class="govuk-table__header">
+                                            Port name
+                                        </th>
+                                        <th aria-class="Action" class="govuk-table__header govuk-visually-hidden" scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="govuk-table__body">
+                                    @foreach (var port in Model.RespondentVM.PortList)
+                                    {
+                                        <tr class="govuk-table__row">
+                                            @Html.HiddenFor(modelItem => port.Id)
+                                            @Html.HiddenFor(modelItem => port.Locode)
+                                            <td class="govuk-table__cell col1">
+                                                @Html.DisplayFor(modelItem => port.PortName)
+                                            </td>
+                                            <td class="govuk-table__cell">
+                                                <input type="submit" aria-label="remove @port.Locode" asp-route-id=@port.Locode class="link-button col2" value="Delete" asp-page-handler="RemovePort" />
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    { <div class="govuk-form-group">
+                            <h3 class="govuk-heading-m">
+                                Ports
+                                <span class="govuk-hint">
+                                    No ports.
+                                </span>
+                            </h3>
+                        </div>
+                    }
+                </div>
+                <div id="noAssociatedPorts" class="govuk-form-group" hidden>
+                    <span class="govuk-hint">
+                        You must select respondent type as port in <a href="RespondentDetails" class="govuk-link" data-target="RespondentDetails">
+                            Respondent details</a> to add a port.
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Stylesheets {
+    <link href="~/js/sortableTable/sortable-table.css" rel="stylesheet" />
+    <link href="~/css/scroll.css" rel="stylesheet" />
+    <link href="~/css/accessible-autocomplete.min.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/js/sortableTable/sortable-table.js"></script>
+    <script src="~/js/profile/RespondentDetails.js"></script>
+    <script src="~/js/accessible-autocomplete.js"></script>
+    
+    <script>
+        var ukPorts = @Html.Raw(Json.Serialize(Model.UkPorts));
+        var chkPort = '@(Model.Input.SenderType)' === '@true';
+    </script>
+}
+

@@ -1,0 +1,81 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.MSD2.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="govuk-body">
+    <div class="govuk-back-link">
+        <a class="govuk-link" asp-page="./Index">Back</a>
+    </div>
+    <div class="govuk-main-wrapper">
+        <h2>Create</h2>
+        <h4>Msd2</h4>
+        <hr />
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="govuk-error-message"></div>
+                    <div class="govuk-form-group">
+                        <label asp-for="Msd2.SenderId" class="govuk-label">Sender Id</label>
+                        <input asp-for="Msd2.SenderId" class="govuk-input" />
+                        <span asp-validation-for="Msd2.SenderId" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="Msd2.ReportingPort" class="govuk-label">Reporting Port</label>
+                        <input asp-for="Msd2.ReportingPort" class="govuk-input" />
+                        <span asp-validation-for="Msd2.ReportingPort" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="Msd2.Year" class="govuk-label">Year</label>
+                        <input asp-for="Msd2.Year" class="govuk-input" />
+                        <span asp-validation-for="Msd2.Year" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="Msd2.Quarter" class="govuk-label">Quarter</label>
+                        <input asp-for="Msd2.Quarter" class="govuk-input" />
+                        <span asp-validation-for="Msd2.Quarter" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="Msd2.GrossWeightInward" class="govuk-label">Gross Weight Inward</label>
+                        <input asp-for="Msd2.GrossWeightInward" class="govuk-input" />
+                        <span asp-validation-for="Msd2.GrossWeightInward" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="Msd2.TotalUnitsInward" class="govuk-label">Total Units Inward</label>
+                        <input asp-for="Msd2.TotalUnitsInward" class="govuk-input" />
+                        <span asp-validation-for="Msd2.TotalUnitsInward" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="Msd2.PassengerVehiclesInward" class="govuk-label">Passenger Vehicles Inward</label>
+                        <input asp-for="Msd2.PassengerVehiclesInward" class="govuk-input" />
+                        <span asp-validation-for="Msd2.PassengerVehiclesInward" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="Msd2.GrossWeightOutward" class="govuk-label">Gross Weight Outward</label>
+                        <input asp-for="Msd2.GrossWeightOutward" class="govuk-input" />
+                        <span asp-validation-for="Msd2.GrossWeightOutward" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="Msd2.TotalUnitsOutward" class="govuk-label">Total Units Outward</label>
+                        <input asp-for="Msd2.TotalUnitsOutward" class="govuk-input" />
+                        <span asp-validation-for="Msd2.TotalUnitsOutward" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <label asp-for="Msd2.PassengerVehiclesOutward" class="govuk-label">Passenger Vehicles Outward</label>
+                        <input asp-for="Msd2.PassengerVehiclesOutward" class="govuk-input" />
+                        <span asp-validation-for="Msd2.PassengerVehiclesOutward" class="govuk-error-message"></span>
+                    </div>
+                    <div class="govuk-form-group">
+                        <input type="submit" value="Create" class="govuk-button" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

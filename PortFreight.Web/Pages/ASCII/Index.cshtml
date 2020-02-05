@@ -1,0 +1,107 @@
+﻿@page
+@using PortFreight.Web.Utilities
+@model PortFreight.Web.Pages.ASCII.IndexModel
+@{
+    var FileList = TempData.GetKeep<InputModel>("FileList") ?? new InputModel();
+
+    bool hasFiles = FileList.FileList.Count() > 0 ? true : false;
+
+    bool isValid = Model.ModelState.IsValid;
+}
+@{
+    <div class="govuk-visually-hidden">
+   @(!hasFiles ? ViewData["Title"] = "ASCII upload" : ViewData["Title"] = "File Uploaded successfully: ASCII upload");
+   </div>
+}
+<main id="main" tabindex="-1">
+<a class="govuk-link" asp-page="/Dashboard">Back</a>
+<div class="govuk-main-wrapper">
+    <h1 class="govuk-heading-l">Upload a flat file</h1>
+    <div class="govuk-body">
+        Only use this page if you usually submit maritime statistics in a flat file (also known as ASCII). To find out more, see the <a class="govuk-link" href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/754687/ascii-user-guide.odt">ASCII Submission Guide</a> on the <a class="govuk-link" href="https://www.gov.uk/government/publications/maritime-statistics-directive-reporting-guidance">Maritime Statistics Directive reporting information page.</a>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        <div style="@(hasFiles || !isValid ? "display : none" : "")">
+            <label class="govuk-heading-m" for="Files">
+                Select a file
+            </label>
+            <span id="with-hint-hint" class="govuk-hint">
+                Select one or more flat files
+            </span>
+            <input class="govuk-file-upload js-enabled jsFileUpload" type="file" name="Files" accept=".txt" multiple />
+        </div>
+        <br />
+        <div class="jsSubmitButton">
+            <button asp-page-handler="SaveFiles" type="submit" class="govuk-button">Submit files</button>
+        </div>
+        <div class="@(isValid ? "govuk-form-group" : "govuk-form-group govuk-form-group--error")">
+            <div asp-validation-summary="All" class="govuk-error-summary__body" style="color:#b10e1e">
+                <h2 class="govuk-heading-s" style="@(isValid ? "display:none" : ""); color:#b10e1e">
+                    There is a problem with the following files
+                </h2>
+            </div>
+        </div>
+        <div style="@(!hasFiles ? "display:none" : "")">
+            <h2 style="@(ModelState.ErrorCount > 0 ? "display:none" : "")" class="alert-success govuk-heading-m">
+                The files below have been submitted
+                <span id="with-hint-hint" class="govuk-hint">
+                    If a file has been submitted in error, click remove
+                </span>
+            </h2>
+               
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-third">
+                    <div class="govuk-heading-m">File name</div>
+                </div>
+                <div class="govuk-grid-column-one-third">
+                    <div class="govuk-heading-m">File size</div>
+                </div>
+                <div class="govuk-grid-column-one-third"></div>
+            </div>
+            @for (var i = 0; FileList.FileList.Count() > i; i++)
+            {
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-one-third">
+                        <label class="govuk-label">
+                            @FileList.FileList[i].FileName
+                        </label>
+                    </div>
+                    <div class="govuk-grid-column-one-third">
+                        <label class="govuk-label">
+                            @FileList.FileList[i].FileSize
+                            <small> Bytes</small>
+                        </label>
+                    </div>
+                    <div class="govuk-grid-column-one-third">
+                        <button type="submit" aria-label="Remove the file @FileList.FileList[i].FileName" class="link-button"
+                                asp-page-handler="DeleteBucketObject" asp-route-FileToDelete="@FileList.FileList[i].FileName">
+                            Remove
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+        <div style="@(hasFiles || !isValid ? "" : "display : none")">
+            <button type="submit" asp-page-handler="SubmitMoreFiles" class="govuk-button jsSubmitMoreFiles">Submit more files</button>
+        </div>
+    </form>
+
+</div>
+</main>
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $(".jsSubmitButton").hide();
+
+        });
+        $(".jsFileUpload").change(function () {
+            if ($(".jsFileUpload").val() > "") {
+                $(".jsSubmitButton").show();
+            }
+            else {
+                $(".jsSubmitButton").hide();
+            }
+        });  
+    </script>
+}

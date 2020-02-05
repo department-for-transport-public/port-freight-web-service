@@ -1,0 +1,44 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.MSD3.MSD3Agents.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete Shipping Line or Agent";
+}
+<div class="govuk-back-link">
+    <a class="govuk-link" asp-page="./Index" asp-route-id="@Model.Msd3agent.Msd3Id">Back</a>
+</div>
+<div class="govuk-main-wrapper">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <h2 class="govuk-heading-m">Are you sure you want to Delete Shipping Line or Agent</h2>
+        <div class="govuk-grid-row">
+            <div class="govuk-form-group">
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                    <dt class="govuk-summary-list__key">
+                @Html.DisplayNameFor(model => model.Msd3agent.SenderId)
+            </dt>
+                <dd class="govuk-summary-list__value">
+                @Html.DisplayFor(model => model.Msd3agent.SenderId)
+            </dd>
+                <dt class="govuk-summary-list__key">
+                @Html.DisplayNameFor(model => model.Msd3agent.Msd3Id)
+            </dt>
+            <dd class="govuk-summary-list__value">
+                @Html.DisplayFor(model => model.Msd3agent.Msd3Id)
+            </dd>
+            </dl>
+            <form method="post">
+                <input type="hidden" asp-for="Msd3agent.Id" />
+                <input type="hidden" asp-for="Msd3agent.Msd3Id" />
+                <input type="hidden" asp-for="Msd3agent.SenderId" />
+                <div asp-validation-summary="ModelOnly" class="govuk-error-summary"></div>
+                <span class="govuk-error-message">@Html.ValidationMessage("CustomError")</span>
+                <input type="submit" value="Delete" class="govuk-button" />
+            </form>
+     </div>
+        </div>
+        </div>
+    </div>
+
+</div>
+

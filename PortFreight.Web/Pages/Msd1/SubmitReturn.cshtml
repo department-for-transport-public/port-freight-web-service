@@ -1,0 +1,216 @@
+﻿@page
+@model PortFreight.Web.Pages.Msd1.SubmitReturnModel
+@{
+    ViewData["Title"] = "Summary for " + @Model.MSD1.ShipName;
+}
+@{
+    var error = @Html.Raw(TempData["MSD1Key"]);
+}
+<main id="main" tabindex="-1">
+@{
+    if (Model.FromSummary)
+    {
+        <a class="govuk-link" asp-page="../Summary/SubmissionSummary">Back</a>
+    }
+}
+<div class="govuk-main-wrapper">
+    <div class="govuk-form-group">
+        <form method="post">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <div>
+                        @{
+                            if (!Model.FromSummary)
+                            {
+                                <span class="govuk-caption-l">Step 5 of 5</span>
+                            }
+                        }
+                    </div>
+
+                    <h1 class="govuk-heading-xl">
+                        @ViewData["Title"]
+                    </h1>
+                    <div class="govuk-form-group">
+                        <h2 class="govuk-heading-m" style="display:inline">
+                            Company details
+                        </h2>
+                        <a class="govuk-link" asp-page="/Msd1/CompanyDetails" asp-route-FromSummary="@Html.Raw((Model.FromSummary == true) ? "true" : "false")"
+                           style="float:right; margin-top:0.75em">
+                            Amend
+                            <span class="govuk-visually-hidden">company details</span>
+                        </a>
+                    </div>
+                    <br />
+                    <p class="govuk-body">
+                    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                       <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Shipping Agent
+                            </dt>
+                           <dd class="govuk-summary-list__value">
+                                @Model.MSD1.AgentSenderID
+                            </dd>
+                        </div>
+                       <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Shipping Line
+                            </dt>
+                            <dd class="govuk-summary-list__value">
+                                @Model.MSD1.LineSenderID
+                            </dd>
+                        </div>
+                    </dl>
+                    </p>
+                    <div class="govuk-form-group">
+                        <h2 class="govuk-heading-m" style="display:inline">
+                            Voyage details
+                        </h2>
+                        <a class="govuk-link" asp-page="/Msd1/VoyageDetails" asp-route-FromSummary="@Html.Raw((Model.FromSummary == true) ? "true" : "false")"
+                           style="float:right; margin-top:0.75em">
+                            Amend
+                            <span class="govuk-visually-hidden">voyage details</span>
+                        </a>
+                    </div>
+                    <br />
+                    <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Year
+                            </dt>
+                           <dd class="govuk-summary-list__value">
+                                @Model.MSD1.Year
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Quarter
+                            </dt>
+                           <dd class="govuk-summary-list__value">
+                                @Model.MSD1.Quarter
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Reporting port
+                            </dt>
+                           <dd class="govuk-summary-list__value">
+                                @Model.MSD1.ReportingPort
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Direction
+                            </dt>
+                           <dd class="govuk-summary-list__value">
+                                @Html.Raw((Model.MSD1.IsInbound ?? true) ? "Inwards" : "Outwards")
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                @Html.Raw((Model.MSD1.IsInbound ?? true) ? "Port of loading" : "Port of discharge")
+                            </dt>
+                           <dd class="govuk-summary-list__value">
+                                @Model.MSD1.AssociatedPort
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row">
+                            <dt class="govuk-summary-list__key">
+                                Number of voyages
+                            </dt>
+                           <dd class="govuk-summary-list__value">
+                                @Model.MSD1.NumVoyages
+                            </dd>
+                        </div>
+                           @if (@Model.MSD1.VoyageDate != null)
+                        {
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    Date of Voyage
+                                </dt>
+                               <dd class="govuk-summary-list__value">
+                                    @Model.MSD1.VoyageDate.Value.ToString("d/M/yyyy")
+                                </dd>
+                            </div>
+                        }
+                        @if (@Model.MSD1.RecordRef != null)
+                        {
+                            <div class="govuk-summary-list__row">
+                                <dt class="govuk-summary-list__key">
+                                    Your reference
+                                </dt>
+                               <dd class="govuk-summary-list__value">
+                                    @Model.MSD1.RecordRef
+                                </dd>
+                            </div>
+                        }
+                    </dl>
+                    <div class="govuk-form-group">
+                        <h2 class="govuk-heading-m" style="display:inline">
+                            Cargo details
+                        </h2>
+                        <a class="govuk-link" asp-page="/Msd1/CargoDetails" asp-route-FromSummary="@Html.Raw((Model.FromSummary == true) ? "true" : "false")"
+                           style="float:right; margin-top:0.75em">
+                            Amend
+                            <span class="govuk-visually-hidden">cargo details</span>
+                        </a>
+                    </div>
+                    <br />
+                    <div class="govuk-form-group">
+                        <table id="tblCargoSummary" class="govuk-table">
+                            <thead class="govuk-table__head">
+                                <tr class="govuk-table__row">
+                                    <th class="govuk-table__header" scope="col">Cargo category</th>
+                                    <th class="govuk-table__header govuk-table__header--numeric" scope="col">Number of units with cargo</th>
+                                    <th class="govuk-table__header govuk-table__header--numeric" scope="col">Total number of units</th>
+                                    <th class="govuk-table__header govuk-table__header--numeric" scope="col">Gross weight of goods</th>
+                                </tr>
+                            </thead>
+                            <tbody class="govuk-table__body">
+                                @foreach (var cargoItem in Model.MSD1.CargoSummary)
+                                {
+                                    <tr class="govuk-table__row">
+                                        @Html.HiddenFor(modelItem => cargoItem.Id)
+                                        <td class="govuk-table__cell">
+                                            @Html.DisplayFor(modelItem => cargoItem.Category)
+                                        </td>
+                                        <td class="govuk-table__cell govuk-table__cell--numeric">
+                                            @Html.Raw(cargoItem.UnitsWithCargo.HasValue && cargoItem.UnitsWithCargo != 0 ? cargoItem.UnitsWithCargo.ToString() : "-")
+                                        </td>
+                                        <td class="govuk-table__cell govuk-table__cell--numeric">
+                                            @Html.Raw(cargoItem.TotalUnits.HasValue && cargoItem.TotalUnits != 0 ? cargoItem.TotalUnits.ToString() : "-")
+                                        </td>
+                                        <td class="govuk-table__cell govuk-table__cell--numeric">
+                                            @Html.Raw(cargoItem.GrossWeight.HasValue ? cargoItem.GrossWeight.ToString() : "-")
+                                        </td>
+                                    </tr>
+                                }
+                                @if (Model.MSD1.CargoSummary.Count > 1)
+                                {
+                                    <tr class="govuk-table__row">
+                                        <td class="govuk-table__header">Total</td>
+                                        <td class="govuk-table__cell govuk-table__cell--numeric">@Model.MSD1.CargoSummary.Sum(x => x.UnitsWithCargo).ToString()</td>
+                                        <td class="govuk-table__cell govuk-table__cell--numeric">@Model.MSD1.CargoSummary.Sum(x => x.TotalUnits).ToString()</td>
+                                        <td class="govuk-table__cell govuk-table__cell--numeric">@Model.MSD1.CargoSummary.Sum(x => x.GrossWeight).ToString()</td>
+                                        <td class="govuk-table__cell govuk-table__cell--numeric"></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    @if (!Model.FromSummary || Model.IsEdited)
+                    {
+                        <h2 class="govuk-heading-m">Now submit your return</h2>
+                        <p class="govuk-body">
+                            By submitting this notification you are confirming that, to the best of your knowledge, the details you are providing are correct.
+                        </p>
+
+                        <button type="submit" value="Accept and submit" class="govuk-button">
+                            Accept and submit
+                        </button>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</main>

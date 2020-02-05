@@ -1,0 +1,117 @@
+﻿@page
+@model AgentReturnModel
+@{
+    ViewData["Title"] = "Quarterly shipping line/agent return";
+}
+<main id="main" tabindex="-1">
+    <a class="govuk-link" asp-page="/QuarterlyReturn/Checklist">Back</a>
+    <div class="govuk-main-wrapper">
+        @await Html.PartialAsync("../Shared/_ErrorSummary")
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <h1 class="govuk-heading-l">
+                    @ViewData["Title"]<br />
+                    <span class="govuk-hint">
+                        Enter the codes or names of all shipping lines using the port and all agents
+                        acting for shipping lines at the port in the quarter.
+                    </span>
+                </h1>
+                <form id="frmReturn" method="post">
+                    <div class="govuk-form-group">
+                        <h2 class="govuk-heading-m">
+                            Reporting Port
+                            <span class="govuk-hint">@Model.MSD23.PortName</span>
+                        </h2>
+                    </div>
+                    <div class="govuk-form-group">
+                        <h2 class="govuk-heading-m">
+                            Year
+                            <label class="govuk-label">@Model.MSD23.Year</label>
+                        </h2>
+                    </div>
+                    <div class="govuk-form-group">
+                        <h2 class="govuk-heading-m">
+                            Quarter
+                            <label class="govuk-label">Quarter @Model.MSD23.Quarter</label>
+                        </h2>
+                    </div>
+                    <div class="@(!Model.ModelState.IsValid && Model.Input.SenderId is null ? "govuk-form-group govuk-form-group--error" : "govuk-form-group")">
+                        <label class="govuk-label" asp-for="@Model.Input.SenderId"></label>
+                        <span asp-validation-for="@Model.Input.SenderId" class="govuk-error-message"></span>
+                        <div class="govuk-form-group">
+                            <input asp-for="@Model.Input.SenderId" style="width:90%;" class="govuk-input" id="Input_SenderId" />
+                            <button type="submit" id="addAgentItem" class="govuk-button" style="float:right;" value="Add" asp-page-handler="AddAgent">Add</button>
+                        </div>
+                    </div>
+                    @if (Model.MSD3VM != null && Model.MSD3VM.AgentSummary.Count > 0)
+                    {
+                        <h3 class="govuk-heading-m">
+                            Shipping Line or Agents
+                        </h3>
+                        <div class="govuk-grid-row outerDIV">
+                            <div class="govuk-grid-column-full innerDIV ">
+                                <table class="govuk-table scroll" id="SubmissionSummaryTable">
+                                    <thead class="govuk-table__head">
+                                        <tr class="govuk-table__row">
+                                            <th aria-sort="none" class="govuk-table__header">
+                                                <button type="button" data-index="0">Shipping Line or Agents</button>
+                                            </th>
+                                            <th class="govuk-table__header" scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="govuk-table__body">
+                                        @foreach (var agent in Model.MSD3VM.AgentSummary)
+                                        {
+                                            <tr class="govuk-table__row">
+                                                @Html.HiddenFor(modelItem => agent.Id)
+                                                <td class="govuk-table__cell col1">
+                                                    @Html.DisplayFor(modelItem => agent.ShippingAgent)
+                                                </td>
+                                                <td class="govuk-table__cell">
+                                                    <input type="submit" asp-route-id=@agent.Id class="govuk-link col2" value="Remove" asp-page-handler="RemoveAgent" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                    else
+                    { <div class="govuk-form-group">
+                            <h3 class="govuk-heading-m">
+                                Shipping Line or Agents
+                                <span class="govuk-hint">
+                                    No shipping line or agents entered.
+                                </span>
+                            </h3>
+                        </div>
+                    }
+                    <div id="divSubmitCargo" class="govuk-form-group">
+                        <button type="submit" id="SubmitCargo" value="Submit" style="float:left;" asp-page-handler="Submit" class="govuk-button">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+@section Stylesheets {
+    <link href="~/js/sortableTable/sortable-table.css" rel="stylesheet" />
+    <link href="~/css/scroll.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/js/sortableTable/sortable-table.js"></script>
+    <script src="~/js/maintainscroll.jquery.js/maintainscroll.min.js"></script>
+    <script src="~/js/msd3/VoyageReturn.js"></script>
+    <script>
+        var senders = @Html.Raw(Json.Serialize(Model.Senders));
+    </script>
+    <script>
+        const HtmlTable = document.getElementById("SubmissionSummaryTable");
+        (function () {
+            new SortableTable(HtmlTable);
+        })();
+    </script>
+}

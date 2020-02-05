@@ -1,0 +1,100 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.MSD3.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+ <div class="govuk-back-link">
+            <a class="govuk-link" asp-page="./Index">Back</a>
+        </div>
+<main id="main" tabindex="-1">
+<h1 class="govuk-heading-l">Details</h1>
+<div>
+    <h2 class="govuk-heading-m">Msd3</h2>
+   <table class="govuk-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+<dl class="govuk-summary-list">
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+     @Html.DisplayNameFor(model => model.Msd3.SenderId)
+    </dt>
+    <dd class="govuk-summary-list__value">
+     @Html.DisplayFor(model => model.Msd3.SenderId) 
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+       @Html.DisplayNameFor(model => model.Msd3.ReportingPort)
+    </dt>
+    <dd class="govuk-summary-list__value">
+       @Html.DisplayFor(model => model.Msd3.ReportingPort)
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      @Html.DisplayNameFor(model => model.Msd3.Year)
+    </dt>
+    <dd class="govuk-summary-list__value">
+      @Html.DisplayFor(model => model.Msd3.Year)
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+        @Html.DisplayNameFor(model => model.Msd3.Quarter) 
+    </dt>
+    <dd class="govuk-summary-list__value">
+      @Html.DisplayFor(model => model.Msd3.Quarter)
+    </dd>
+  </div>
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+     @Html.DisplayNameFor(model => model.Msd3.DataSourceId)
+    </dt>
+    <dd class="govuk-summary-list__value">
+    @Html.DisplayFor(model => model.Msd3.DataSourceId)
+    </dd>
+  </div>
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+     @Html.DisplayNameFor(model => model.Msd3.CreatedDate) 
+    </dt>
+    <dd class="govuk-summary-list__value">
+    @Html.DisplayFor(model => model.Msd3.CreatedDate)
+    </dd>
+  </div>
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+      @Html.DisplayNameFor(model => model.Msd3.ModifiedDate) 
+    </dt>
+    <dd class="govuk-summary-list__value">
+   @Html.DisplayFor(model => model.Msd3.ModifiedDate)
+    </dd>
+  </div>
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+     @Html.DisplayNameFor(model => model.Msd3.CreatedBy)
+    </dt>
+    <dd class="govuk-summary-list__value">
+      @Html.DisplayFor(model => model.Msd3.CreatedBy)
+    </dd>
+  </div>
+    <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">
+       @Html.DisplayNameFor(model => model.Msd3.LastUpdatedBy)
+    </dt>
+    <dd class="govuk-summary-list__value">
+     @Html.DisplayFor(model => model.Msd3.LastUpdatedBy)
+    </dd>
+  </div>
+  </dl>
+  
+                                        <td>
+                                            <a asp-page="./Edit" asp-route-id="@Model.Msd3.Id" class="link-button">Edit</a>
+                                        </td>
+                                    </tr>
+                            </tbody>
+                        </table>
+</div>
+</main>

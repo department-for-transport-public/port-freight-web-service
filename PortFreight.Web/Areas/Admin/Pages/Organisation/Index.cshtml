@@ -1,0 +1,78 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.Organisation.IndexModel
+
+@{
+    ViewData["Title"] = "Search or create an Organisation";
+}
+<a class="govuk-back-link" asp-page="/Index">Back</a>
+<div class="govuk-main-wrapper">
+    <h1 class="govuk-heading-l">@ViewData["Title"]</h1>
+    <form method="post">
+
+
+        <div class="govuk-form-group">
+            <span class="govuk-error-message">@Html.ValidationMessage("SearchInput")</span>
+            <label asp-for="SearchInput" class="govuk-label">Enter either a Sender Id or Company Name</label>
+
+            <input asp-for="SearchInput" class="govuk-input govuk-input--width-20">
+            <button asp-page-handler="Search" class="govuk-button" type="submit">Search</button>
+        </div>
+    </form>
+
+    <h2 class="alert-success">@Html.ValidationMessage("SuccessMessage")</h2>
+    <p class="govuk-body">
+        <a class="govuk-link" asp-page="Create">Create New</a>
+    </p>
+    <table class="govuk-table">
+        <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+                <th class="govuk-table__header">
+                    Id
+                </th>
+                <th class="govuk-table__header">
+                    Name
+                </th>
+
+                <th class="govuk-table__header">
+                    IsAgent
+                </th>
+                <th class="govuk-table__header">
+                    IsLine
+                </th>
+                <th class="govuk-table__header">
+                    IsPort
+                </th>
+                <th></th>
+
+            </tr>
+
+        </thead>
+        <tbody class="govuk-table__body">
+            @foreach (var item in Model.OrganisationList)
+            {
+                <tr class="govuk-table__row">
+                    <td class="govuk-table__cell">
+                        @Html.DisplayFor(modelItem => item.OrgId)
+                    </td>
+                    <td class="govuk-table__cell">
+                        @Html.DisplayFor(modelItem => item.OrgName)
+                    </td>
+                    <td class="govuk-table__cell">
+                        @Html.DisplayFor(modelItem => item.IsAgent)
+                    </td>
+                    <td class="govuk-table__cell">
+                        @Html.DisplayFor(modelItem => item.IsLine)
+                    </td>
+                    <td class="govuk-table__cell">
+                        @Html.DisplayFor(modelItem => item.IsPort)
+                    </td>
+                    <td class="govuk-table__cell">
+                        <a asp-page="./Edit" asp-route-id="@item.OrgPkId">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.OrgPkId">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.OrgPkId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

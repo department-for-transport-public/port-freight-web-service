@@ -1,0 +1,88 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.WorldFleet.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+<main id="main" tabindex="-1">
+<div class="govuk-body">
+    <div class="govuk-back-link">
+        <a class="govuk-link" asp-page="Index">Back</a>
+    </div>
+    <div class="govuk-main-wrapper">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <h1 class="govuk-heading-m">Details for @Html.DisplayFor(model => model.WorldFleet.ShipName)</h1>
+            </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <div class="govuk-form-group">
+                    <span asp= class="govuk-error-message"></span>
+                </div>
+                <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            IMO
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            @Html.DisplayFor(model => model.WorldFleet.Imo)
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Ship name
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            @Html.DisplayFor(model => model.WorldFleet.ShipName)
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Call sign
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            @Html.DisplayFor(model => model.WorldFleet.CallSign)
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Flag code
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            @Html.DisplayFor(model => model.WorldFleet.FlagCode)
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Deadweight
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            @Html.DisplayFor(model => model.WorldFleet.Deadweight)
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Ship status
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            @Html.DisplayFor(model => model.WorldFleet.ShipStatus)
+                        </dd>
+                    </div>
+                    <div class="govuk-summary-list__row">
+                        <dt class="govuk-summary-list__key">
+                            Ship type code
+                        </dt>
+                        <dd class="govuk-summary-list__value">
+                            @Html.DisplayFor(model => model.WorldFleet.ShipTypeCode)
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+        <div class="govuk-form-group">
+            <a class="govuk-link" asp-page="./Edit" asp-route-id="@Model.WorldFleet.Imo">Edit</a>
+        </div>
+    </div>
+</div>
+</main>

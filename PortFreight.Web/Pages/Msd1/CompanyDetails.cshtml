@@ -1,0 +1,55 @@
+﻿@page
+@model PortFreight.Web.Pages.Msd1.CompanyDetailsModel
+@{
+    ViewData["Title"] = "Company Details";
+}
+<main id="main" tabindex="-1">
+@if (Model.FromSummary)
+{
+    <a class="govuk-link" asp-page="SubmitReturn" asp-route-FromSummary="true" asp-route-IsEdited="true">Back</a>
+}
+else
+{
+    <a class="govuk-link" asp-page="Index">Back</a>
+}
+
+<div class="govuk-main-wrapper">
+    @await Html.PartialAsync("../Shared/_ErrorSummary")
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <span class="govuk-caption-l">Step 1 of 5</span>
+            <h1 class="govuk-heading-l">@ViewData["Title"]</h1>
+            <form method="post">
+                <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.Input.AgentSenderId)).HasInnerHtml  ? "govuk-form-group--error" : "")">
+                    <label class="govuk-label" asp-for="Input.AgentSenderId"></label>
+                    <span class="govuk-hint">
+                        The company that acts on behalf of the shipping line or operator
+                    </span>
+                    <span asp-validation-for="@Model.Input.AgentSenderId" class="govuk-error-message"></span>
+                    <input asp-for="Input.AgentSenderId" class="govuk-input" id="Input_AgentSenderId" />
+                </div>
+                <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.Input.LineSenderId)).HasInnerHtml  ? "govuk-form-group--error" : "")">
+                    <label class="govuk-label" asp-for="Input.LineSenderId" for="Input_LineSenderId"></label>
+                    <span class="govuk-hint">
+                        For foreign operators, use code XXX888
+                    </span>
+                    <span asp-validation-for="Input.LineSenderId" class="govuk-error-message"></span>
+                    <input asp-for="Input.LineSenderId" class="govuk-input" id="Input_LineSenderId" />
+                </div>
+                <div class="govuk-form-group">
+                    <button type="submit" class="govuk-button">
+                        Continue
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</main>
+@section Scripts {
+    <script src="~/js/msd1/CompanyDetails.js"></script>
+    <script>
+        var agentsenders =  @Html.Raw(Json.Serialize(Model.AgentSenders))
+        var linesenders =  @Html.Raw(Json.Serialize(Model.LineSenders))
+    </script>
+}

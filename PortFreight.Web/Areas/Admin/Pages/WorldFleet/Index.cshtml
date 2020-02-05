@@ -1,0 +1,75 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.WorldFleet.IndexModel
+
+@{
+    ViewData["Title"] = "World Fleet";
+}
+<main id="main" tabindex="-1">
+<div class="govuk-body">
+    <div class="govuk-back-link">
+        <a class="govuk-link" asp-page="/Index">Back</a>
+    </div>
+    <div class="govuk-main-wrapper">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <h1 class="govuk-heading-l">World Fleet</h1>
+                <form method="post">
+                    <div class="govuk-form-group">
+                        <span class="govuk-error-message">@Html.ValidationMessage("CustomError")</span>
+                        <span class="govuk-caption-m">Search by IMO, Ship name, or Call sign</span>
+                        <span>
+                            <span asp-validation-for="SearchInput"></span>
+                            <input asp-for="SearchInput" class="govuk-input govuk-input--width-20">
+                            <button asp-page-handler="Search" class="govuk-button" type="submit">Search</button>
+                        </span>
+                    </div>
+                            <h2 class="alert-success">@Html.ValidationMessage("SuccessMessage")</h2>
+                    <p class="govuk-body">
+                        <a class="govuk-link" asp-page="Create">Create New</a>
+                    </p>
+                    <table class="table">
+                        <thead class="govuk-table">
+                            <tr class="govuk-table__row">
+                                <th class="govuk-table__header">
+                                    @Html.DisplayNameFor(model => model.WorldFleet[0].Imo)
+                                </th>
+                                <th class="govuk-table__header">
+                                    @Html.DisplayNameFor(model => model.WorldFleet[0].ShipName)
+                                </th>
+                                <th class="govuk-table__header">
+                                    @Html.DisplayNameFor(model => model.WorldFleet[0].CallSign)
+                                </th>
+                                <th class="govuk-table__header"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            @if (Model.WorldFleet != null)
+                            {
+                                @foreach (var item in Model.WorldFleet)
+                                {
+                                    <tr class="govuk-table__row">
+                                        <td class="govuk-table__cell">
+                                            @Html.DisplayFor(modelItem => item.Imo)
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            @Html.DisplayFor(modelItem => item.ShipName)
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            @Html.DisplayFor(modelItem => item.CallSign)
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            <a class="govuk-link" asp-page="./Edit" asp-route-id="@item.Imo">Edit</a> |
+                                            <a class="govuk-link" asp-page="./Details" asp-route-id="@item.Imo">Details</a> |
+                                            <a class="govuk-link" asp-page="./Delete" asp-route-id="@item.Imo">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</main>

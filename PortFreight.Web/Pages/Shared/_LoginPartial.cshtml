@@ -1,0 +1,22 @@
+@using Microsoft.AspNetCore.Identity
+@using PortFreight.Data
+
+@inject SignInManager<PortFreightUser> SignInManager
+@inject UserManager<PortFreightUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-area="Identity" asp-page="/Account/Logout"  method="post" id="logoutForm" class="">
+        <ul id="navigation" class="govuk-header__navigation" aria-label="Top Level Navigation">
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="govuk-header__navigation-item">
+                    <a class="govuk-header__link" asp-area="Admin" asp-page="/Index">Admin</a>
+                </li>
+            }
+            <li class="govuk-header__navigation-item">
+                <button type="submit" class="btn-logout_link" asp-area="Identity" asp-page="/Account/Logout" >Logout</button>
+</li>
+        </ul>
+    </form>
+}

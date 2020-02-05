@@ -1,0 +1,60 @@
+﻿@page
+@model CargoUserHelpModel
+@{
+    ViewData["Title"] = "How should I categorise my cargo?";
+}
+<main id="main" tabindex="-1">
+    <a class="govuk-link" asp-page="CargoDetails">Back</a>
+    <div class="govuk-main-wrapper">
+        <div class="govuk-grid-row">
+            <h1 class="govuk-heading-xl">
+                @ViewData["Title"]
+            </h1>
+            <p class="govuk-body">
+               This page helps you choose which category to use when reporting your cargo. The categories we use are a legal requirement.
+There are 25 cargo categories. Each one comes under one of the 6 groups below. Click a group to see categories in that group and guidance on which cargoes belong in which category.
+If you are still not sure, email the helpdesk at <a href="mailto:maritimestats.help@dft.gov.uk">maritimestats.help@dft.gov.uk </a>  or phone on 020 7944 4441
+
+            </p>
+          
+            <div class="govuk-body" id="accordion">
+                <div class="govuk">
+                <br />
+                   <div style="float:right">
+                    <a href="#" class="openall govuk-link">Show all cargo categories</a> |
+                       <a href="#" class="closeall govuk-link">Hide all cargo categories</a>
+                   </div>
+                @foreach (var cargoItem in Model.CargoGroup)
+                {
+                    <button type="button" class="accordion govuk-link">@cargoItem.Description</button>
+                    <div class="panel">
+                    <br />
+                        <p class="govuk-body">@cargoItem.HelpText</p>
+                        @foreach (var categoryItem in cargoItem.CargoCategory)
+                        {
+                            <h3>@categoryItem.Description</h3>
+                            <p class="govuk-body">
+                                @categoryItem.HelpText
+                            </p>
+
+                        }
+                    </div>
+                }
+            </div>
+            <div class="govuk-body">
+                <br /><br />
+            
+            </div><br />
+            <div class="govuk-body">
+                <a href="CargoDetails" class="govuk-link">Return to form</a>
+            </div>
+        </div>
+    </div>
+</main>
+@section Stylesheets {
+    <link href="~/css/CargoHelpAccordion.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/js/msd1/CargoHelp.js"></script>
+    <script src="~/js/maintainscroll.jquery.js/maintainscroll.min.js"></script>
+}

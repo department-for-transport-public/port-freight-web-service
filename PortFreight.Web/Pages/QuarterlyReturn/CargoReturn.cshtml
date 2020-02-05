@@ -1,0 +1,150 @@
+﻿@page
+@model CargoReturnModel
+@{
+    ViewData["Title"] = "Quarterly cargo return";
+}
+@{
+    bool IsSubmitted = (@Model.IsRecordExist);
+}
+<main id="main" tabindex="-1">
+    <a class="govuk-link" asp-page="/QuarterlyReturn/Checklist">Back</a>
+    <div class="govuk-main-wrapper">
+        @await Html.PartialAsync("../Shared/_ErrorSummary")
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <h1 class="govuk-heading-l">
+                    @ViewData["Title"]<br />
+                    <span role="text" class="govuk-hint">Enter the amount of cargo handled at the port in the quarter</span>
+                </h1>
+                <form method="post">
+                    <div class="govuk-form-group">
+                        <h2 class="govuk-heading-m">
+                            Reporting Port
+                            <span class="govuk-hint">@Model.MSD23.PortName</span>
+                        </h2>
+                    </div>
+                    <div class="govuk-form-group">
+                        <h2 class="govuk-heading-m">
+                            Year
+                            <label class="govuk-label">@Model.MSD23.Year</label>
+                        </h2>
+                    </div>
+                    <div class="govuk-form-group">
+                        <h2 class="govuk-heading-m">
+                            Quarter
+                            <label class="govuk-label">Quarter @Model.MSD23.Quarter</label>
+                        </h2>
+                    </div>
+                    <div class="govuk-form-group">
+                        <h2 class="govuk-heading-m">
+                            Inward cargo
+                        </h2>
+                        <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.Input.GrossWeightInwards)).HasInnerHtml ? "govuk-form-group--error" :"")">
+                            <div class="govuk-form-group" id="_divGrossWeightInwards">
+                                <label class="govuk-label" asp-for="@Model.Input.GrossWeightInwards"></label>
+                                <span id="_spGrossWeightInwardHint" class="govuk-hint">
+                                    Excluding the tare weight of containers and ro-ro units
+                                </span>
+                                <span class="govuk-error-message" asp-validation-for=@Model.Input.GrossWeightInwards></span>
+                                <input type="text" id="Input_GrossWeightInwards" asp-for="@Model.Input.GrossWeightInwards" class="govuk-input txt-input">
+                            </div>
+                        </div>
+                        @if (Model.IsInwardBoxVisible)
+                        {
+                            <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.Input.GrossWeightInwardsDescription)).HasInnerHtml || Model.Input.GrossWeightInwardsDescription == null ? "govuk-form-group--error" : "")" id="divInwardsDescription">
+                                <label class="govuk-label" asp-for="@Model.Input.GrossWeightInwardsDescription"></label>
+                                <span id="_spWeightInwardDescHint" class="govuk-hint">
+                                    Gross weight is considerably different to the <b>@String.Format("{0:n0}", (int)Model.PreviousYearGWTInward) tonnes</b> that you entered for this quarter last year. Please correct or provide an explanation below.
+                                </span>
+                                <span class="govuk-error-message" asp-validation-for=@Model.Input.GrossWeightInwardsDescription></span>
+                                <textarea id="Input_GrossWeightInwardsDescription" class="govuk-textarea" rows="5" aria-describedby="Description-hint" asp-for="@Model.Input.GrossWeightInwardsDescription"></textarea>
+                            </div>
+                        }
+                        <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.Input.UnitsInwards)).HasInnerHtml ? "govuk-form-group--error" :"")">
+                            <div class="govuk-form-group" id="_divUnitsInwards">
+                                <label class="govuk-label" asp-for="@Model.Input.UnitsInwards"></label>
+                                <span class="govuk-hint">Units are containers and vehicles (including trailers). Enter '0' if all inwards goods were bulk​.</span>
+                                <span class="govuk-error-message" asp-validation-for=@Model.Input.UnitsInwards></span>
+                                <input id="Input_UnitsInwards" asp-for="@Model.Input.UnitsInwards" class="govuk-input txt-input">
+                            </div>
+                            @if (Model.IsInwardUnitBoxVisible)
+                            {
+                                <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.Input.InwardsUnitDescription)).HasInnerHtml || Model.Input.InwardsUnitDescription == null ? "govuk-form-group--error" : "")" id="divInwardsUnitDescription">
+                                    <label class="govuk-label" asp-for="@Model.Input.InwardsUnitDescription"></label>
+                                    <span id="_spUnitInwardDescHint" class="govuk-hint">
+                                        This is considerably different to the <b>@Model.PreviousYearUintInward units </b> that you entered for this quarter last year. Please correct or provide an explanation below.
+                                        </span>
+                                    <textarea id="Input_InwardsUnitDescription" class="govuk-textarea" rows="5" aria-describedby="Description-hint" asp-for="@Model.Input.InwardsUnitDescription"></textarea>
+                                </div>
+                            }
+                        </div>
+                        <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.Input.PassengerVehiclesInwards)).HasInnerHtml ? "govuk-form-group--error" :"")">
+                            <div class="govuk-form-group" id="_divPassengerVehiclesInwards">
+                                <label class="govuk-label" asp-for="@Model.Input.PassengerVehiclesInwards"></label>
+                                <span class="govuk-hint">For example, cars and buses on a ferry (optional)</span>
+                                <span class="govuk-error-message" asp-validation-for=@Model.Input.PassengerVehiclesInwards></span>
+                                <input id="Input_PassengerVehiclesInwards" asp-for="@Model.Input.PassengerVehiclesInwards" class="govuk-input txt-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="govuk-form-group">
+                        <h2 class="govuk-heading-m">
+                            Outward cargo
+                        </h2>
+                        <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.Input.GrossWeightOutwards)).HasInnerHtml ? "govuk-form-group--error" :"")">
+                            <div class="govuk-form-group" id="_divGrossWeightOutwards">
+                                <label class="govuk-label" asp-for="@Model.Input.GrossWeightOutwards"></label>
+                                <span id="_spGrossWeightOutwardHint" class="govuk-hint">
+                                    Excluding the tare weight of containers and ro-ro units
+                                </span>
+                                <span class="govuk-error-message" asp-validation-for=@Model.Input.GrossWeightOutwards></span>
+                                <input type="text" id="Input_GrossWeightOutwards" asp-for="@Model.Input.GrossWeightOutwards" class="govuk-input txt-input">
+                            </div>
+                            @if (Model.IsOutwardBoxVisible)
+                            {
+                                <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.Input.GrossWeightOutwardsDescription)).HasInnerHtml || Model.Input.GrossWeightOutwardsDescription == null ? "govuk-form-group--error" : "")" id="divOutwardsDescription">
+                                    <label class="govuk-label" asp-for="@Model.Input.GrossWeightOutwardsDescription"></label>
+                                    <span id="_spWeightOutwardDescHint" class="govuk-hint">
+                                        Gross weight is considerably different to the <b>@String.Format("{0:n0}", (int)Model.PreviousYearGWTOutward) tonnes </b> that you entered for this quarter last year. Please correct or provide an explanation below.
+                                        </span>
+                                    <textarea id="Input_GrossWeightOutwardsDescription" class="govuk-textarea" rows="5" aria-describedby="Description-hint" asp-for="@Model.Input.GrossWeightOutwardsDescription"></textarea>
+                                </div>
+                            }
+                        </div>
+                        <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.Input.UnitsOutwards)).HasInnerHtml ? "govuk-form-group--error" :"")">
+                            <div class="govuk-form-group" id="_divUnitsOutwards">
+                                <label class="govuk-label" asp-for="@Model.Input.UnitsOutwards"></label>
+                                <span class="govuk-hint">Units are containers and vehicles (including trailers). Enter '0' if all outwards goods were bulk​.</span>
+                                <span class="govuk-error-message" asp-validation-for=@Model.Input.UnitsOutwards></span>
+                                <input id="Input_UnitsOutwards" asp-for="@Model.Input.UnitsOutwards" class="govuk-input txt-input">
+                            </div>
+                            @if (Model.IsOutwardUnitBoxVisible)
+                            {
+                                <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.Input.OutwardsUnitDescription)).HasInnerHtml || Model.Input.OutwardsUnitDescription == null ? "govuk-form-group--error" : "")" id="divOutwardsUnitDescription">
+                                    <label class="govuk-label" asp-for="@Model.Input.OutwardsUnitDescription"></label>
+                                    <span id="_spUnitOutwardDescHint" class="govuk-hint">
+                                        This is considerably different to the <b>@Model.PreviousYearUintOutward units </b> that you entered for this quarter last year. Please correct or provide an explanation below.
+                                        </span>
+                                    <textarea id="Input_OutwardsUnitDescription" class="govuk-textarea" rows="5" aria-describedby="Description-hint" asp-for="@Model.Input.OutwardsUnitDescription"></textarea>
+                                </div>
+                            }
+                        </div>
+                        <div class="govuk-form-group @(((TagBuilder)Html.ValidationMessageFor(m => m.Input.PassengerVehiclesOutwards)).HasInnerHtml ? "govuk-form-group--error" :"")">
+                            <div class="govuk-form-group" id="_divPassengerVehiclesOutwards">
+                                <label class="govuk-label" asp-for="@Model.Input.PassengerVehiclesOutwards"></label>
+                                <span class="govuk-hint">For example, cars and buses on a ferry (optional) </span>
+                                <span class="govuk-error-message" asp-validation-for=@Model.Input.PassengerVehiclesOutwards></span>
+                                <input id="Input_PassengerVehiclesOutwards" asp-for="@Model.Input.PassengerVehiclesOutwards" class="govuk-input txt-input">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="divSubmitCargo" class="govuk-form-group">
+                        <button type="submit" id="SubmitCargo" value="Submit" style="float:left;" asp-page-handler="Submit" class="govuk-button">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>

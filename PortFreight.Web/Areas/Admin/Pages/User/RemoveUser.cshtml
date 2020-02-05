@@ -1,0 +1,109 @@
+﻿@page
+@model RemoveUserModel
+@{
+}
+<main id="main" tabindex="-1">
+<a class="govuk-back-link"asp-page="/Index">Back</a>
+<form method="post">
+    <div class="govuk-main-wrapper">
+        <div class="govuk-body">
+            <div class="govuk-form-group">
+                <h1 class="govuk-heading-l">Find user</h1>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <div class="govuk-form-group">
+                        <span class="govuk-error-message">@Html.ValidationMessage("NoUsers")</span>
+                        <span class="govuk-error-message">@Html.ValidationMessage("Error")</span>                       
+                                <h2 class="alert-success">@Html.ValidationMessage("SuccessMessage")</h2>                        
+                        <span class="govuk-caption-m">Find a user by email or all users by senderID</span>
+                        <span asp-validation-for="SearchParam" class="govuk-error-message"></span>
+                        <span>
+                            <input asp-for="SearchParam" class="govuk-input govuk-input--width-20" autofocus>
+                            <button asp-page-handler="Search" type="submit" class="govuk-button">Search</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    @{
+                        if (Model.Users.Count > 0)
+                        {
+                            <span class="govuk-error-message">@Html.ValidationMessage("NoUsers")</span>
+                            <table class="govuk-table" id="UserTable">
+                                <thead class="govuk-table__head">
+                                    <tr class="govuk-table__row">
+                                        <th aria-sort="none" class="govuk-table__header">
+                                            Email
+                                        </th>
+                                        <th aria-sort="none" class="govuk-table__header">
+                                            Sender ID
+                                        </th>
+                                        <th aria-sort="none" class="govuk-table__header">
+                                            Phone
+                                        </th>
+                                        <th class="govuk-table__header"></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="govuk-table__body">
+                                    @foreach (var user in @Model.Users)
+                                    {
+                                        <tr class="govuk-table__row">
+                                            <td class="govuk-table__cell">@user.Email</td>
+                                            <td class="govuk-table__cell">@user.SenderId</td>
+                                            <td class="govuk-table__cell">@user.PhoneNumber</td>
+                                            <td class="govuk-table__cell">
+                                                <button class="link-button" type="submit" asp-page-handler="RemoveUser"
+                                                        asp-route-id=@user.Id>
+                                                    Remove
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    @{
+                        if (Model.DeletedUsers.Count > 0)
+                        {
+                            <h2 class="govuk-heading-m">Deleted Users</h2>
+                            <table class="govuk-table">
+                                <thead class="govuk-table__head">
+                                    <tr class="govuk-table__row">
+                                        <th aria-sort="none" class="govuk-table__header">
+                                            Email
+                                        </th>
+                                        <th aria-sort="none" class="govuk-table__header">
+                                            Sender ID
+                                    </tr>
+                                </thead>
+                                <tbody class="govuk-table__body">
+                                    @foreach (var user in @Model.DeletedUsers)
+                                    {
+                                        <tr class="govuk-table__row">
+                                            <td class="govuk-table__cell">@user.Email</td>
+                                            <td class="govuk-table__cell">@user.SenderId</td>
+                                            <td class="govuk-table__cell">
+                                                <button class="link-button" type="submit" asp-page-handler="Reinstate"
+                                                        asp-route-id=@user.Id>
+                                                    Reinstate
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</main>

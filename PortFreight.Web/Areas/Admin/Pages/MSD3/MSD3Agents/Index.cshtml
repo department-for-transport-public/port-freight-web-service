@@ -1,0 +1,51 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.MSD3.MSD3Agents.IndexModel
+
+@{
+    ViewData["Title"] = "Shipping Lines/Agents View";
+}
+<div class="govuk-back-link">
+    <a class="govuk-link" asp-page="../Index">Back</a>
+</div>
+<h2 class="govuk-heading-m">
+    Shipping Lines/Agents for Msd3 : @Model.Msd3Id
+</h2>
+
+<h2 class="alert-success govuk-body">@Html.ValidationMessage("SuccessMessage")</h2>
+
+@if (Model.Msd3agents.Count > 0)
+{
+<table class="govuk-table">
+    <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <td class="govuk-table__row">
+                @Html.DisplayNameFor(model => model.Msd3agents[0].SenderId)
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Msd3agents)
+        {
+            <tr class="govuk-table__row">
+                <td class="govuk-table__row">
+                    @Html.DisplayFor(modelItem => item.SenderId)
+                </td>
+                <td class="govuk-table__row">
+                    <a class="govuk-link link-button" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="govuk-link link-button" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                    <a class="govuk-link link-button" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+else
+{
+    <span class="govuk-body"> No agents are linked to this submission </span>
+    <div class="spacer"> </div>
+}
+<div class="govuk-body">   
+    <a class="govuk-table govuk-link link-button" asp-page="./Add" asp-route-msd3Id=@Model.Msd3Id>Add Line/Agent to return</a>
+</div>

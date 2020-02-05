@@ -1,0 +1,69 @@
+﻿@page
+@model PortFreight.Web.Pages.Profile.InviteColleagueModel
+@{
+    ViewData["Title"] = "Invite a colleague";
+}
+<main id="main" tabindex="-1">
+<a class="govuk-link" asp-page="/Dashboard">Back</a>
+<div class="govuk-main-wrapper">
+    @await Html.PartialAsync("../Shared/_ErrorSummary")
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+            <h1 class="govuk-heading-l">@ViewData["Title"]</h1>
+            <form method="post">
+                <div class="govuk-form-group">
+                    <span class="govuk-hint" id="email_hint_text">
+                        Enter a colleague's email address to add them as a user. You will be able to see data submissions each of you have made.
+                    </span>
+                    <span asp-validation-for="Input.Email" class="govuk-error-message"></span>
+                    <input asp-for="Input.Email" aria-labelledby="email_hint_text" id="Input_Email" type="email" class="govuk-input govuk-input--width-20" autocomplete="email"/>
+                </div>
+                <div class="govuk-form-group">
+                    <button type="submit" class="govuk-button">Send email</button>
+                </div>
+            </form>
+            <h2 class="govuk-heading-l">
+                View all colleagues
+            </h2>
+            <div class="govuk-form-group">
+                @if (Model.invitedUsers != null)
+                {
+                    <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th class="govuk-table__header">Email address</th>
+                                <th class="govuk-table__header">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            @foreach (var user in @Model.invitedUsers)
+                            {
+                                <tr class="govuk-table__row">
+                                    <td class="govuk-table__cell">@user.Email</td>
+                                    <td class="govuk-table__cell">@user.CurrentStatus</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p class="govuk-body-l">No user found!</p>
+                }
+                <br />
+            </div>
+
+            <div class="govuk-form-group">
+                <h2 class="govuk-heading-l">
+                    Remove a colleague
+                </h2>
+                <p class="govuk-body"> If a colleague has left the company, contact
+                    <a class="govuk-link" href="mailto:maritimestats.help@dft.gov.uk">maritimestats.help@dft.gov.uk</a>
+                    to close their account
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</main>

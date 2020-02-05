@@ -1,0 +1,101 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.Organisation.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<a class="govuk-back-link" asp-page="./Index">Back</a>
+
+<div class="govuk-main-wrapper">
+    <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-m">Create Sender Id</h1>
+        <form method="post">
+                <div asp-validation-summary="ModelOnly" class="govuk-error-summary"></div>
+                <span class="govuk-error-message">@Html.ValidationMessage("CustomError")</span>
+            <div class="govuk-form-group">
+                <label asp-for="Organisation.OrgId" class="govuk-label"></label>
+                <span asp-validation-for="Organisation.OrgId" class="govuk-error-message"></span>
+                <input asp-for="Organisation.OrgId" class="govuk-input govuk-input--width-10" />
+            </div>
+            <div class="govuk-form-group">
+                <label asp-for="Organisation.OrgName" class="govuk-label"></label>
+                <span asp-validation-for="Organisation.OrgName" class="govuk-error-message"></span>
+                <input asp-for="Organisation.OrgName" class="govuk-input govuk-input--width-30" />
+            </div>
+            <div class="govuk-form-group">
+                <div class="govuk-checkboxes__item">
+                    <input asp-for="Organisation.IsAgent" class="govuk-checkboxes__input">
+                    <label class="govuk-label govuk-checkboxes__label" >
+                         @Html.DisplayNameFor(model => model.Organisation.IsAgent)
+                    </label>
+
+                </div>
+            </div>
+            <div class="govuk-form-group">
+                <div class="govuk-checkboxes__item">
+                    <input asp-for="Organisation.IsLine" class="govuk-checkboxes__input">
+                    <label class="govuk-label govuk-checkboxes__label">
+                        @Html.DisplayNameFor(model => model.Organisation.IsLine)
+                    </label>
+                </div>
+            </div>
+            <div class="govuk-form-group">
+                <div class="govuk-checkboxes__item">
+                    <input asp-for="Organisation.IsPort" class="govuk-checkboxes__input">
+                    <label class="govuk-label govuk-checkboxes__label">
+                        @Html.DisplayNameFor(model => model.Organisation.IsPort)
+                    </label>
+                </div>
+            </div>
+            <div class="govuk-form-group">
+                <div class="govuk-checkboxes__item">
+                    <input asp-for="Organisation.submits_msd1" class="govuk-checkboxes__input">
+                    <label class="govuk-label govuk-checkboxes__label">
+                        @Html.DisplayNameFor(model => model.Organisation.submits_msd1)
+                    </label>
+                </div>
+            </div>
+            <div class="govuk-form-group">
+                <div class="govuk-checkboxes__item">
+                    <input asp-for="Organisation.submits_msd2" class="govuk-checkboxes__input">
+                    <label class="govuk-label govuk-checkboxes__label">
+                        @Html.DisplayNameFor(model => model.Organisation.submits_msd2)
+                    </label>
+                </div>
+            </div>
+            <div class="govuk-form-group">
+                <div class="govuk-checkboxes__item">
+                    <input asp-for="Organisation.submits_msd3" class="govuk-checkboxes__input">
+                    <label class="govuk-label govuk-checkboxes__label">
+                        @Html.DisplayNameFor(model => model.Organisation.submits_msd3)
+                    </label>
+                </div>
+            </div>
+            <div class="govuk-form-group">
+                <div class="govuk-checkboxes__item">
+                    <input asp-for="Organisation.submits_msd4" class="govuk-checkboxes__input">
+                    <label class="govuk-label govuk-checkboxes__label">
+                        @Html.DisplayNameFor(model => model.Organisation.submits_msd4)
+                    </label>
+                </div>
+            </div>
+            <div class="govuk-form-group">
+                <div class="govuk-checkboxes__item">
+                    <input asp-for="Organisation.submits_msd5" class="govuk-checkboxes__input">
+                    <label class="govuk-label govuk-checkboxes__label">
+                        @Html.DisplayNameFor(model => model.Organisation.submits_msd5)
+                    </label>
+                </div>
+            </div>
+            <div class="govuk-form-group">
+                <button type="submit" class="govuk-button">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

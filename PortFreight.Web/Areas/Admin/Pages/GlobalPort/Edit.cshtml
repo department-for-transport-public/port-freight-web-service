@@ -1,0 +1,98 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.GlobalPort.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<main id="main" tabindex="-1">
+    <div class="govuk-body">
+        <div class="govuk-back-link">
+            <a class="govuk-link" asp-page="Index">Back</a>
+        </div>
+        <div class="govuk-main-wrapper">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    @if (Model.GlobalPort != null)
+                    {
+                        <h1 class="govuk-heading-m">Edit - @Model.GlobalPort.PortName</h1>
+                    }
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="govuk-error-summary"></div>
+                            <span class="govuk-error-message">@Html.ValidationMessage("CustomError")</span>
+                            @if (Model.GlobalPort != null)
+                            {
+                                <div class="govuk-form-group">
+                                    <label asp-for="GlobalPort.PortName" class="govuk-label"></label>
+                                    <span asp-validation-for="GlobalPort.PortName" class="govuk-error-message"></span>
+                                    <input asp-for="GlobalPort.PortName" class="govuk-input govuk-input--width-30" />
+                                </div>
+                                <div class="govuk-form-group">
+                                    <label asp-for="GlobalPort.Locode" class="govuk-label"></label>
+                                    <span asp-validation-for="GlobalPort.Locode" class="govuk-error-message"></span>
+                                    <input asp-for="GlobalPort.Locode" class="govuk-input govuk-input--width-30" />
+                                </div>
+                                <div class="govuk-form-group">
+                                    <label asp-for="GlobalPort.CountryCode" class="govuk-label"></label>
+                                    <span asp-validation-for="GlobalPort.CountryCode" class="govuk-error-message"></span>
+                                    <input asp-for="GlobalPort.CountryCode" class="govuk-input govuk-input--width-30" />
+                                </div>
+                                <div class="govuk-form-group">
+                                    <label asp-for="GlobalPort.StatisticalPort" class="govuk-label"></label>
+                                    <span asp-validation-for="GlobalPort.StatisticalPort" class="govuk-error-message"></span>
+                                    <input asp-for="GlobalPort.StatisticalPort" class="govuk-input govuk-input--width-30" />
+                                </div>
+                                <span id="waste-hint" class="govuk-hint">
+                                    Select all that apply.
+                                </span>
+                                <div class="govuk-checkboxes">
+                                    <div class="govuk-checkboxes__item">
+                                        <input asp-for="GlobalPort.ForMsd1LoadUnload" class="govuk-checkboxes__input" />
+                                        <label class="govuk-label govuk-checkboxes__label">
+                                            For MSD1 Load/Unload
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input asp-for="GlobalPort.ForMsd1ReportingPort" class="govuk-checkboxes__input" />
+                                        <label class="govuk-label govuk-checkboxes__label">
+                                            For MSD1 Reporting Port
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input asp-for="GlobalPort.ForMsd2" class="govuk-checkboxes__input" />
+                                        <label class="govuk-label govuk-checkboxes__label">
+                                            For MSD2
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input asp-for="GlobalPort.ForMsd3" class="govuk-checkboxes__input" />
+                                        <label class="govuk-label govuk-checkboxes__label">
+                                            For MSD3
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input asp-for="GlobalPort.ForMsd4" class="govuk-checkboxes__input" />
+                                        <label class="govuk-label govuk-checkboxes__label">
+                                            For MSD4
+                                        </label>
+                                    </div>
+                                    <div class="govuk-checkboxes__item">
+                                        <input asp-for="GlobalPort.ForMsd5" class="govuk-checkboxes__input" />
+                                        <label class="govuk-label govuk-checkboxes__label">
+                                            For MSD5
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="govuk-form-group" style="margin-top:2em">
+                                    <input type="submit" value="Save" class="govuk-button" />
+                                </div>
+                            }
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

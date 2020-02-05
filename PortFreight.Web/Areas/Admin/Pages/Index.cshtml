@@ -1,0 +1,65 @@
+﻿@page
+@model IndexModel
+
+<div class="govuk-back-link">
+    <a class="govuk-link" asp-page="/Dashboard">Back</a>
+</div>
+<div id="main" class="govuk-main-wrapper" tabindex="-1">
+    <h1 class="govuk-heading-l">
+        Admin
+    </h1>
+    <hr />
+    <br />
+
+    <h2 class="govuk-heading-l">Submissions</h2>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+            <p class="govuk-body">Search for an MSD1 return</p>
+            <p class="govuk-body"><a class="govuk-link" asp-page="/Submissions/FindSubmission">Find MSD1 Submission</a></p>
+        </div>
+        <div class="govuk-grid-column-one-third">
+            <p class="govuk-body">Search for an MSD2 return</p>
+            <p class="govuk-body"><a class="govuk-link" asp-page="/MSD2/Index">Find MSD2 Submission</a></p>
+        </div>
+        <div class="govuk-grid-column-one-third">
+            <p class="govuk-body">Search for an MSD3 return</p>
+            <p class="govuk-body"><a class="govuk-link" asp-page="/MSD3/Index">Find MSD3 Submission</a></p>
+        </div>
+    </div>
+    <hr />
+    <br />
+    <h2 class="govuk-heading-l">User Management</h2>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+            <p class="govuk-body">Invite a new user to the Port Freight System</p>
+            <p class="govuk-body"><a class="govuk-link" asp-page="/User/AddUser">Add User</a></p>
+        </div>
+        <div class="govuk-grid-column-one-third">
+            <p class="govuk-body">View or Remove an existing user on the Port Freight System</p>
+            <p class="govuk-body"><a class="govuk-link" asp-page="/User/RemoveUser">View / Remove User</a></p>
+        </div>
+    </div>
+    <hr />
+    <br />
+    <h2 class="govuk-heading-l">World Fleet / Ports / Organisation</h2>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-third">
+            <p class="govuk-body">World Fleet</p>
+            <p class="govuk-body"> <a class="govuk-link" asp-page="/WorldFleet/Index" asp-area="Admin">Search or create a World Fleet</a></p>
+        </div>
+
+        <div class="govuk-grid-column-one-third">
+            <p class="govuk-body">Global Port</p>
+            <p class="govuk-body"> <a class="govuk-link" asp-page="/GlobalPort/Index" asp-area="Admin">Search or create a Global Port</a></p>
+        </div>
+        <div class="govuk-grid-column-one-third">
+            <p class="govuk-body">Ship List</p>
+            <p class="govuk-body"> <a class="govuk-link" asp-page="/WorldFleet/ShipListUpload">Upload ship list</a></p>
+        </div>
+
+        <div class="govuk-grid-column-one-third">
+            <p class="govuk-body">Organisation List</p>
+            <p class="govuk-body"> <a class="govuk-link" asp-page="/Organisation/Index">Search or create an Organisation</a></p>
+        </div>
+    </div>
+</div>

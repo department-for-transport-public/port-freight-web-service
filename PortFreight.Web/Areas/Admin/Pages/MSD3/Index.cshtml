@@ -1,0 +1,227 @@
+﻿@page
+@model IndexModel
+
+<div class="govuk-body">
+    <div class="govuk-back-link">
+        <a class="govuk-link" asp-page="/Index">Back</a>
+    </div>
+    <div class="govuk-main-wrapper">
+        <h1 class="govuk-heading-l">Find a MSD3 return</h1>
+        <form method="post">
+            <h2 class="govuk-heading-m">Enter search criteria</h2>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-third">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">SenderId</label>
+                        <input asp-for="SearchDataInputModel.SenderId" class="govuk-input" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Unique Reference</label>
+                        <input asp-for="SearchDataInputModel.UniqueRef" class="govuk-input" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Reporting Port</label>
+                        <input asp-for="SearchDataInputModel.ReportingPort" class="govuk-input" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Year</label>
+                        <input type="number" asp-for="SearchDataInputModel.Year" class="govuk-input" />
+                    </div>
+                </div>
+                <div class="govuk-grid-column-one-third">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Quarter</label>
+                        <input type="number" asp-for="SearchDataInputModel.Quarter" class="govuk-input" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Agent</label>
+                        <input asp-for="SearchDataInputModel.Agent" class="govuk-input" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Date Entered</label>
+                        <input type="date" asp-for="SearchDataInputModel.DateEntered" class="govuk-input" placeholder="dd/mm/yyyy" />
+                    </div>
+                </div>
+                <div class="govuk-grid-column-one-third">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Last Updated By</label>
+                        <input asp-for="SearchDataInputModel.LastUpdatedBy" class="govuk-input" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Statistical Port</label>
+                            <input asp-for="SearchDataInputModel.StatisticalPort" class="govuk-input" id="Input_StatisticalPort" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <label class="govuk-label">Source</label>
+                        <select asp-for="SearchDataInputModel.Source" class="govuk-select" id="_ddlSource">
+                            <option value="" selected="selected">Please Select</option>
+                            <option value="1">WEB</option>
+                            <option value="2">ASCII</option>
+                            <option value="3">GESMES</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="govuk-form-group">
+                <button type="submit" asp-page-handler="Search" onclick="window.location='#search_results'" class="govuk-button">Search</button>
+                <a class="clear-button" onclick="clearbutton()"> Clear </a>
+            </div>
+              <h2 class="alert-success">@Model.SuccessMessage</h2>
+        </form>
+        
+        <div id="search_results">
+            <div class="govuk-form-group">
+                <span class="govuk-error-message">@Html.ValidationMessage("CustomError")</span>
+            </div>
+            @if (Model.Msd3SummarySearchResultList.Count > 0)
+            {
+                <p class="govuk-body">Search Results: @Model.Msd3SummarySearchResultList.Count </p>
+                 <hr />
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-one-thirds">
+                                <span class="govuk-details__text"> <b>Search Results: @Model.Msd3SummarySearchResultList.Count</b> </span>
+                                @{
+                                    var searchInputs = new Dictionary<string, string>
+                                                                                    {
+                                                                                        {"SenderId", @Model.SearchDataInputModel.SenderId },
+                                                                                        {"UniqueRef", @Model.SearchDataInputModel.UniqueRef },
+                                                                                        {"Agent", @Model.SearchDataInputModel.Agent },
+                                                                                        {"ReportingPort", @Model.SearchDataInputModel.ReportingPort},
+                                                                                        {"Year", @Model.SearchDataInputModel.Year},
+                                                                                        {"Quarter", @Model.SearchDataInputModel.Quarter},
+                                                                                        {"DateEntered", @Model.SearchDataInputModel.DateEntered},
+                                                                                        {"LastUpdatedBy", @Model.SearchDataInputModel.LastUpdatedBy},
+                                                                                        {"StatisticalPort", @Model.SearchDataInputModel.StatisticalPort},
+                                                                                        {"Source", @Model.SearchDataInputModel.Source}
+                                                                                
+                                                                                    };
+                                    }
+                                <a style="float:right; margin-right:1em" class="govuk-link" asp-all-route-data="searchInputs" asp-page-handler="Export">
+                                    Export to CSV
+                                </a>
+                            </div>
+                        </div>
+                        <br />
+            <div id="table-wrapper">
+                <div id="table-scroll">
+                    <table class="govuk-table" id="SubmissionSummaryTable">
+                        <caption class="govuk-table__caption">Returns</caption>
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th aria-sort="none" class="govuk-table__header">
+                                    <button type="button" data-index="0">
+                                        @Html.DisplayNameFor(model => model.Msd3SummarySearchResultList[0].SenderId)
+                                    </button>
+                                </th>
+                                 <th aria-sort="none" class="govuk-table__header">
+                                    <button type="button" data-index="0">Unique Reference
+                                    </button>
+                                </th>
+                                <th aria-sort="none" class="govuk-table__header">
+                                    <button type="button" data-index="2">
+                                        @Html.DisplayNameFor(model => model.Msd3SummarySearchResultList[0].ReportingPort)
+                                    </button>
+                                </th>
+                                <th aria-sort="none" class="govuk-table__header">
+                                    <button type="button" data-index="3">
+                                        @Html.DisplayNameFor(model => model.Msd3SummarySearchResultList[0].Year)
+                                    </button>
+                                </th>
+                                <th aria-sort="none" class="govuk-table__header">
+                                    <button type="button" data-index="4">
+                                        @Html.DisplayNameFor(model => model.Msd3SummarySearchResultList[0].Quarter)
+                                    </button>
+                                </th>
+                                <th aria-sort="none" class="govuk-table__header">
+                                    <button type="button" data-index="5">
+                                        Agents
+                                    </button>
+                                </th>
+                                <th aria-sort="ascending" class="govuk-table__header">
+                                    <button type="button" data-index="6">
+                                        @Html.DisplayNameFor(model => model.Msd3SummarySearchResultList[0].CreatedDate)
+                                    </button>
+                                </th>
+                                <th aria-sort="none" class="govuk-table__header">
+                                    <button type="button" data-index="7">
+                                        @Html.DisplayNameFor(model => model.Msd3SummarySearchResultList[0].LastUpdatedBy)
+                                    </button>
+                                </th>
+
+                                <th></th>
+
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body scroll">
+                            @if (Model.Msd3SummarySearchResultList != null)
+                            {
+                                @foreach (var msd3 in Model.Msd3SummarySearchResultList)
+                                {
+                                    <tr class="govuk-table__row">
+                                        <td class="govuk-table__cell">
+                                            @msd3.SenderId
+                                        </td>
+                                         <td class="govuk-table__cell">
+                                            @msd3.Id
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            @msd3.ReportingPort
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            @msd3.Year
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            @msd3.Quarter
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            <a class="govuk-link" asp-page="./MSD3Agents/Index" asp-route-id="@msd3.Id">View</a>
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                             <div class="govuk-visually-hidden-focusable">
+                                                @msd3.CreatedDate?.ToString("yyyyMMdd")
+                                            </div>
+                                            @msd3.CreatedDate?.ToString("dd/MM/yyyy")
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            @msd3.LastUpdatedBy
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                            <a class="govuk-link" asp-page="./Edit" asp-route-id="@msd3.Id">Edit</a>
+                                        </td>
+                                        <td class="govuk-table__cell">
+                                                <a class="govuk-link" asp-page="./Delete" asp-route-id="@msd3.Id">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>
+@section Stylesheets {
+    <link href="~/js/sortableTable/sortable-table.css" rel="stylesheet" />
+    <link href="~/css/searchAdmin.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/js/admin/msd1_submission.js"></script>
+    <script src="~/js/clearbutton.js"></script>
+    <script src="~/js/sortableTable/sortable-table.js"></script>
+
+    
+    <script>
+    var statPortsList =  @Html.Raw(Json.Serialize(Model.StatPortsList));
+
+        (function () {
+            new SortableTable(document.getElementById("SubmissionSummaryTable"));
+            ReadyPage();
+        })();
+
+    </script>
+}

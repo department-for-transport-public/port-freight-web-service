@@ -1,0 +1,81 @@
+# dev branch publishes to the dev project
+
+steps:
+
+# Decrypt in parallel
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - kms
+  - decrypt
+  - '--ciphertext-file=./PortFreight.Web/appsettings.dev.json.enc'
+  - '--plaintext-file=./PortFreight.Web/appsettings.Development.json'
+  - '--location=europe-west1'
+  - '--keyring=CLOUDBUILD-SECRETS'
+  - '--key=CLOUDBUILD-KEY'
+  waitFor: ['-']
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - kms
+  - decrypt
+  - '--ciphertext-file=./PortFreight.FileProcessor/appsettings.dev.json.enc'
+  - '--plaintext-file=./PortFreight.FileProcessor/appsettings.Development.json'
+  - '--location=europe-west1'
+  - '--keyring=CLOUDBUILD-SECRETS'
+  - '--key=CLOUDBUILD-KEY'
+  waitFor: ['-']
+# ********************
+
+
+
+# Publish solution
+- name: 'gcr.io/cloud-builders/dotnet'
+  args: [ 'publish', '-c', 'Release' ]
+  id: 'publish'
+
+
+
+# Run tests in parallel
+- name: 'gcr.io/cloud-builders/dotnet'
+  args: [ 'test', 'PortFreight.Web.Tests', '--no-build', '-c', 'Release' ]
+  waitFor: ['publish']
+
+- name: 'gcr.io/cloud-builders/dotnet'
+  args: [ 'test', 'PortFreight.Data.Tests', '--no-build', '-c', 'Release' ]
+  env:
+  - 'GOOGLE_CLOUD_PROJECT=$PROJECT_ID'
+  waitFor: ['publish']
+
+- name: 'gcr.io/cloud-builders/dotnet'
+  args: [ 'test', 'PortFreight.Services.Tests', '--no-build', '-c', 'Release' ]
+  waitFor: ['publish']
+# ********************
+
+
+
+# Copy app.dev.yaml files to publish folder
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: [ 'cp', 'PortFreight.Web/app.dev.yaml', 'PortFreight.Web/bin/Release/netcoreapp2.1/publish/app.yaml' ]
+  id: 'web'
+
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: [ 'cp', 'PortFreight.FileProcessor/app.dev.yaml', 'PortFreight.FileProcessor/bin/Release/netcoreapp2.1/publish/app.yaml' ]
+  id: 'files'
+# ********************
+
+
+
+# Deploy both services in parallel
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: [ 'app', 'deploy' ]
+  dir: './PortFreight.Web/bin/Release/netcoreapp2.1/publish'
+  waitFor: ['web']
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: [ 'app', 'deploy' ]
+  dir: './PortFreight.FileProcessor/bin/Release/netcoreapp2.1/publish'
+  waitFor: ['files']
+# ********************
+
+
+timeout: 1200s

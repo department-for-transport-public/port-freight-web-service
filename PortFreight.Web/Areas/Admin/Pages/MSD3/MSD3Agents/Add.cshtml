@@ -1,0 +1,42 @@
+﻿@page
+@model PortFreight.Web.Areas.Admin.Pages.MSD3.MSD3Agents.AddModel
+
+@{
+    ViewData["Title"] = "Add Agents";
+}
+
+<div class="govuk-body">
+    <div class="govuk-back-link">
+        <a class="govuk-link" asp-page="./Index" asp-route-id="@Model.Input.Msd3Id">Back</a>
+    </div>
+    <div class="govuk-main-wrapper">
+        <h1 class="govuk-heading-l">Add  Msd3 Agents</h1>
+
+        <hr />
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <form method="post">
+                    <input type="hidden" asp-for="Input.Msd3Id">
+                    <div asp-validation-summary="ModelOnly" class="govuk-error-summary"></div>
+                    <span class="govuk-error-message">@Html.ValidationMessage("CustomError")</span>
+                   
+                    <div class="govuk-form-group">
+                        <label asp-for="Input.SenderId" class="govuk-label"></label>
+                        <span asp-validation-for="Input.SenderId" class="govuk-error-message"></span>
+                        <input asp-for="Input.SenderId" class="govuk-input" />
+                    </div>
+                    <div class="govuk-form-group">
+                        <input type="submit" value="Add Shipping Line/Agent" class="govuk-button" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/msd3/VoyageReturn.js"></script>
+    <script>
+        var senders = @Html.Raw(Json.Serialize(Model.Msd3SenderIdList));
+    </script>
+}

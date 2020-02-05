@@ -1,0 +1,100 @@
+﻿@page
+@model DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<main id="main" tabindex="-1">
+<div class="govuk-body">
+    <div class="govuk-back-link">
+      <a class="govuk-link" asp-page="./Index">Back</a>
+    </div>
+    <div class="govuk-main-wrapper">
+        <h1 class="govuk-heading-m">Delete</h1>
+        <span class="govuk-error-message">@Html.ValidationMessage("CustomError")</span>
+        <h2 class="govuk-heading-l">Are you sure you want to permanently delete this entry?</h2>
+        <form method="post">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                       Id
+                   </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Html.DisplayFor(model => model.msd2.Id)
+                    </dd>
+                     
+                </div>
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Reporting Port
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Html.DisplayFor(model => model.msd2.ReportingPort)
+                    </dd>
+                </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Year
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Html.DisplayFor(model => model.msd2.Year)
+                    </dd>
+                </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Quarter
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Html.DisplayFor(model => model.msd2.Quarter)
+                    </dd>
+                </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Data Source Id
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Html.DisplayFor(model => model.msd2.DataSourceId)
+                    </dd>
+                </div>
+                  <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Created Date
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Html.DisplayFor(model => model.msd2.CreatedDate)
+                    </dd>
+                </div>
+                 <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Modified Date
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Html.DisplayFor(model => model.msd2.ModifiedDate)
+                    </dd>
+                </div>
+                 <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Created By
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Html.DisplayFor(model => model.msd2.CreatedBy)
+                    </dd>
+                </div>
+                 <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">
+                        Last Updated By
+                    </dt>
+                    <dd class="govuk-summary-list__value">
+                        @Html.DisplayFor(model => model.msd2.LastUpdatedBy)
+                    </dd>
+                </div>
+            </dl>
+            <button class="govuk-button" type="submit" asp-route-id=@Model.msd2.Id >
+                Delete
+            </button>
+
+        </form>
+    </div>
+</div>
+</main>
+        

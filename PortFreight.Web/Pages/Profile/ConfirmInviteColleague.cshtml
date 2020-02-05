@@ -1,0 +1,49 @@
+﻿@page
+
+<main id="main" tabindex="-1">
+<a class="govuk-link" asp-page="InviteColleague">Back</a>
+<div class="govuk-main-wrapper">
+    <div class="app-prose-scope">
+        <div class="successBanner">
+            <h4 class="emailLink">
+                We have sent an email to @TempData["inviteduser"]
+            </h4>
+        </div>
+        <div class="emailMessage">
+            <div class="innerEmailMessage">
+                <p class="govuk-body">
+                    If they do not receive an email in the next 10 minutes, ask them to check their spam folder before contacting
+                    <a href="mailto:maritimestats.help@dft.gov.uk">maritimestats.help@dft.gov.uk</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+@section Stylesheets {
+    <style>
+        .successBanner {
+            background-color: #00823b;
+            width: 100%;
+            height: 3em;
+            margin-bottom: 1.5em;
+        }
+
+        .emailLink {
+            color: white !important;
+            padding-top: 0.6em;
+            margin-left: 0.5em;
+        }
+
+        .emailMessage {
+            border: solid;
+            border-color: #005ea5;
+            border-width: 0.5em;
+            margin-bottom: 3em
+        }
+
+        .innerEmailMessage {
+            margin: 0.75em;
+        }
+    </style>
+}

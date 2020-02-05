@@ -1,0 +1,235 @@
+﻿@page
+@model PortFreight.Web.Pages.Msd1.VoyageDetailsModel
+@{
+    ViewData["Title"] = "Voyage details for " + @Model.MSD1.ShipName;
+}
+<main id="main" tabindex="-1">
+@{
+    if (Model.FromSummary)
+    {
+        <a asp-page="SubmitReturn" asp-route-FromSummary="true" asp-route-IsEdited="true" class="govuk-back-link">Back</a>
+    }
+    else
+    {
+        <a asp-page="VesselDetails" class="govuk-back-link">Back</a>
+    }
+}
+<div class="govuk-main-wrapper">
+    @await Html.PartialAsync("../Shared/_ErrorSummary")
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <span class="govuk-caption-l">Step 3 of 5</span>
+            <h1 class="govuk-heading-l">@ViewData["Title"]</h1>
+            <form method="post">
+                <div class="govuk-form-group">
+                    <label class="govuk-label" asp-for="Input.Year">
+                        Year
+                    </label>
+                    @Html.DropDownListFor(x => Model.Input.Year, new SelectList(Model.Years, "Value", "Text"), htmlAttributes:
+                        new { @class = "govuk-select", id = "Input_Year", name = "Year" })
+                </div>
+                <div id="reportingPort" class="govuk-visually-hidden">
+                @TempData["RP"].ToString()
+                 </div>
+                  <div id="associatedPort" class="govuk-visually-hidden">
+                @TempData["AP"].ToString()
+                 </div>
+                <div class="govuk-form-group
+                    @{
+                        if (ModelState.FirstOrDefault(x => x.Key == "Input.Quarter").Value != null)
+                        {
+                            if (ModelState.FirstOrDefault(x => x.Key == "Input.Quarter").Value.Errors.Count > 0)
+                            {
+                                @Html.Raw("govuk-form-group--error");
+                            }
+                        }
+
+                    }
+                ">
+                    <label class="govuk-label" asp-for="Input.Quarter">
+                        Quarter
+                    </label>
+                    <span asp-validation-for="@Model.Input.Quarter" class="govuk-error-message"></span>
+                    @Html.DropDownListFor(x => Model.Input.Quarter, new SelectList(Model.Quarters, "Value", "Text"), htmlAttributes:
+                        new { @class = "govuk-select", id = "Input_Quarter", name = "Quarter" })
+                </div>
+                <div class="@(!Model.ModelState.IsValid && Model.Input.ReportingPort is null ? "govuk-form-group govuk-form-group--error" : "govuk-form-group")">
+                    <label class="govuk-label" asp-for="Input.ReportingPort">
+                        Reporting Port
+                    </label>
+                    <span class="govuk-hint">Select the port for which you're completing this return</span>
+                    <span asp-validation-for="@Model.Input.ReportingPort" class="govuk-error-message"></span>
+                    
+
+                    <div id="Input_ReportingPort-container"></div>
+                    
+                </div>
+                <div class="govuk-form-group @(!Model.ModelState.IsValid && Model.Input.IsInbound is null ? "govuk-form-group--error" : "")" id="_divDirection">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__heading">
+                            <label class="govuk-heading-m">
+                                Direction of travel
+                            </label>
+                        </legend>
+                        <span asp-validation-for="@Model.Input.IsInbound" class="govuk-error-message"></span>
+                        <div class="govuk-radios govuk-radios--inline">
+                            <div class="govuk-radios__item">
+                                @Html.RadioButtonFor(x => Model.Input.IsInbound, "true", htmlAttributes:
+                                new { @id= "Input_IsInbound", @class = "govuk-radios__input"})
+                                <label class="govuk-label govuk-radios__label" for="Input_IsInbound">
+                                    Inwards
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                @Html.RadioButtonFor(x => Model.Input.IsInbound, "false", htmlAttributes:
+                                new { @id= "Input_IsOutbound", @class = "govuk-radios__input"})
+                                <label class="govuk-label govuk-radios__label" for="Input_IsOutbound">
+                                    Outwards
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div id="_divVoyageDetails">
+                    <div class="govuk-form-group
+                         @{
+                            if (ModelState.FirstOrDefault(x => x.Key == "Input.AssociatedPort").Value != null)
+                            {
+                                if (ModelState.FirstOrDefault(x => x.Key == "Input.AssociatedPort").Value.Errors.Count > 0)
+                                {
+                                    @Html.Raw("govuk-form-group--error");
+                                }
+                            }
+                        }
+                    ">
+                        <label class="govuk-label" asp-for="Input.AssociatedPort" id="_lblPort"></label>
+                        <span id="_spPortHint" class="govuk-hint"></span>
+                        <span asp-validation-for="@Model.Input.AssociatedPort" class="govuk-error-message"></span>
+                        <div id="Input_AssociatedPort-container"></div>
+                    </div>
+                    <div class="govuk-form-group @{
+                        if (ModelState.FirstOrDefault(x => x.Key == "Input.NumVoyages").Value != null)
+                        {
+                            if (ModelState.FirstOrDefault(x => x.Key == "Input.NumVoyages").Value.Errors.Count > 0)
+                            {
+                                @Html.Raw("govuk-form-group--error");
+                            }
+                        }
+
+                    }">
+                        <label class="govuk-label" asp-for="Input.NumVoyages">
+                            Number of voyages
+                        </label>
+                        <span id="_spNoVoyages" class="govuk-hint">
+                            If this return is for more than one voyage, enter the total number of voyages the
+                            vessel took on this route
+                        </span>
+                        <span asp-validation-for="@Model.Input.NumVoyages" class="govuk-error-message"></span>
+                        <input id="Input_NumVoyages" asp-for="@Model.Input.NumVoyages" class="govuk-input">
+                    </div>
+
+
+<fieldset class="govuk-fieldset" aria-describedby="_dateOfVoyageHint" role="group">
+    <div class="govuk-form-group
+                         @{
+                            if (ModelState.FirstOrDefault(x => x.Key == "Input.VoyageDateDay").Value != null)
+                            {
+                                if (ModelState.FirstOrDefault(x => x.Key == "Input.VoyageDateDay").Value.Errors.Count > 0)
+                                {
+                                    @Html.Raw("govuk-form-group--error");
+                                }
+                            }
+                            if (ModelState.FirstOrDefault(x => x.Key == "Input.VoyageDateMonth").Value != null)
+                            {
+                                if (ModelState.FirstOrDefault(x => x.Key == "Input.VoyageDateMonth").Value.Errors.Count > 0)
+                                {
+                                    @Html.Raw("govuk-form-group--error");
+                                }
+                            }
+                            if (ModelState.FirstOrDefault(x => x.Key == "Input.VoyageDateYear").Value != null)
+                            {
+                                if (ModelState.FirstOrDefault(x => x.Key == "Input.VoyageDateYear").Value.Errors.Count > 0)
+                                {
+                                    @Html.Raw("govuk-form-group--error");
+                                }
+                            }
+                        }
+                    ">
+            <legend class="govuk-label">Date of voyage (optional)</legend>
+        <span id="_dateOfVoyageHint" class="govuk-hint"></span>
+        <span asp-validation-for="@Model.Input.VoyageDateDay" class="govuk-error-message"></span>
+        <span asp-validation-for="@Model.Input.VoyageDateMonth" class="govuk-error-message"></span>
+        <span asp-validation-for="@Model.Input.VoyageDateYear" class="govuk-error-message"></span>
+        <div class="govuk-date-input" id="_VoyageDate">
+            <div class="govuk-date-input__item govuk-date-input__item--day">
+                <div  class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="_VoyageDateDay">
+                        Day
+                    </label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" asp-for="@Model.Input.VoyageDateDay" />
+                </div>
+            </div>
+            <div class="govuk-date-input__item govuk-date-input__item--month">
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="_VoyageDateMonth">
+                        Month
+                    </label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-2" asp-for="@Model.Input.VoyageDateMonth" />
+                </div>
+            </div>
+            <div class="govuk-date-input__item govuk-date-input__item--year">
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-date-input__label" for="_VoyageDateYear">
+                        Year
+                    </label>
+                    <input class="govuk-input govuk-date-input__input govuk-input--width-4" asp-for="@Model.Input.VoyageDateYear" />
+    </div>
+</fieldset> 
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" asp-for="Input.RecordRef">
+                            Your reference (optional)
+                        </label>
+                        <span id="_spNoVoyages" class="govuk-hint">
+                            Enter a reference to match your filing records
+                        </span>
+                        <input id="Input_RecordRef" asp-for="@Model.Input.RecordRef" class="govuk-input">
+                    </div>
+                </div>
+                <div class="govuk-form-group">
+                    <button type="submit" class="govuk-button">
+                        Continue
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</main>
+@section Stylesheets {
+    <link href="~/css/accessible-autocomplete.min.css" rel="stylesheet" />
+}
+@section Scripts
+    {
+    <script src="~/js/msd1/VoyageDetails.js"></script>
+    <script src="~/js/accessible-autocomplete.js"></script>
+    
+    <script>
+        var reportingports = @Html.Raw(Json.Serialize(Model.ReportingPorts));
+        var associatedports = @Html.Raw(Json.Serialize(Model.AssociatedPorts));
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+             reportingPort = document.getElementById('reportingPort').innerHTML;
+             if (reportingPort != ""){
+                document.getElementById('Input_ReportingPort').value = reportingPort.trim().split('"').join('');     
+             }
+             associatedPort = document.getElementById('associatedPort').innerHTML;
+            if (associatedPort != ""){
+                document.getElementById('Input_AssociatedPort').value = associatedPort.trim().split('"').join('');
+            } 
+
+  });
+</script>
+}

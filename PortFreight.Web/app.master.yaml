@@ -1,0 +1,15 @@
+runtime: aspnetcore
+env: flex
+
+automatic_scaling:
+  max_num_instances: 1
+
+beta_settings:
+  cloud_sql_instances: "Enter your database connection including port no"
+
+env_variables:
+  ASPNETCORE_ENVIRONMENT: Production
+
+resources:
+  memory_gb: 1
+  
